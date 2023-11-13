@@ -116,7 +116,7 @@
 		C3D9DDCC2B025EF3001FF8B1 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				C3D9DDE02B0262CB001FF8B1 /* Shared Helpers */,
+				C3D9DDE02B0262CB001FF8B1 /* Helpers */,
 				C3D9DDD72B02619A001FF8B1 /* CountryList */,
 				C3D9DDCE2B025F23001FF8B1 /* HTTPClient.swift */,
 			);
@@ -161,12 +161,12 @@
 			path = CountryList;
 			sourceTree = "<group>";
 		};
-		C3D9DDE02B0262CB001FF8B1 /* Shared Helpers */ = {
+		C3D9DDE02B0262CB001FF8B1 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				C3D9DDE12B0262DC001FF8B1 /* HTTPURLResponse+StatusCode.swift */,
 			);
-			path = "Shared Helpers";
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
