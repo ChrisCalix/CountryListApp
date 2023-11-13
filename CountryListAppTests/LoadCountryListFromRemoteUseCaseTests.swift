@@ -75,6 +75,42 @@ final class LoadCountryListFromRemoteUseCaseTests: XCTestCase {
         }
     }
     
+    func test_load_deliversItemsOn200HTTPResponseWithJSONItems() {
+        let (sut, client) = makeSUT()
+        
+        let item1 = makeItem(
+            commonName: "a name",
+            officialName: "a name",
+            region: "a region",
+            subregion: "a subregion",
+            png: URL(string: "http://another-url.com")!,
+            svg: URL(string: "http://another-url.com")!,
+            capital: ["a capital"]
+        )
+        
+        let item2 = makeItem(
+            commonName: "a name",
+            officialName: "a name",
+            region: "a region",
+            subregion: "a subregion",
+            timezones: ["hour"],
+            png: URL(string: "http://another-url.com")!,
+            svg: URL(string: "http://another-url.com")!,
+            flagURL: URL(string: "http://another-url.com")!,
+            continents: ["continent"],
+            capital: ["a capital"]
+        )
+       
+        let items = [item1.model, item2.model]
+        
+        expect(sut, toCompleteWith: .success(items)) {
+            let json = makeItemsJSON([item1.json, item2.json])
+            
+            print("emptyListJSON \(String(decoding: json, as: UTF8.self))")
+            client.complete(withStatusCode: 200, data: json)
+        }
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(url: URL = URL(string: "https://a-url.com")!, file: StaticString = #file, line: UInt = #line) -> (sut: RemoteCountryLoader, client: HTTPClientSpy) {
@@ -87,6 +123,47 @@ final class LoadCountryListFromRemoteUseCaseTests: XCTestCase {
     
     private func failure(_ error: RemoteCountryLoader.Error) -> RemoteCountryLoader.Result {
         return .failure(error)
+    }
+    
+    private func makeItem(
+        commonName: String,
+        officialName: String? = nil,
+        region: String,
+        subregion: String,
+        timezones: [String] = [],
+        png: URL = anyURL(),
+        svg: URL = anyURL(),
+        flagURL: URL = anyURL(),
+        continents: [String] = [],
+        capital: [String]
+    ) -> (model: CountryListItem, json: [String: Any]) {
+        let item = CountryListItem(
+            name: CountryListItem.Name(common: commonName, official: officialName),
+            region: region,
+            subregion: subregion,
+            flags: CountryListItem.flagsImage(png: png, svg: svg),
+            capital: capital,
+            timezones: timezones,
+            continents: continents
+        )
+        
+        let json = [
+            "name": [
+                "common" : commonName,
+                "official" : officialName
+            ],
+            "region": region,
+            "subRegion": subregion,
+            "flags": [
+                "png": png.absoluteString,
+                "svg": svg.absoluteString
+            ],
+            "capital": capital,
+            "timezones": timezones,
+            "continents": continents
+        ].compactMapValues{ $0 }
+        
+        return (item, json)
     }
     
     private func makeItemsJSON(_ items: [[String: Any]]) -> Data {
