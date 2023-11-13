@@ -9,9 +9,6 @@ import UIKit
 @testable import CountryListApp
 
 extension CountryListViewController {
-    func simulateUserInitiatedFeedReload() {
-        refreshControl?.simulatePullToRefresh()
-    }
     
     @discardableResult
     func simulateCountryImageViewVisible(at index: Int) -> CountryCell? {
@@ -50,7 +47,7 @@ extension CountryListViewController {
     }
     
     var isShowingLoadingIndicator: Bool {
-        return refreshControl?.isRefreshing == true
+        return loader.isLoading
     }
     
     func numberOfRenderedFeedImageViews() -> Int {

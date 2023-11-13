@@ -25,12 +25,19 @@ final class CountryListUIIntegrationTests: XCTestCase {
 
         sut.loadViewIfNeeded()
         XCTAssertEqual(loader.loadCountryListCallCount, 1, "Expected a loading request once view is loaded")
+    }
+    
+    func test_loadingFeedIndicator_isVisibleWhileLoadingFeed() {
+        let (sut, loader) = makeSUT()
 
-        sut.simulateUserInitiatedFeedReload()
-        XCTAssertEqual(loader.loadCountryListCallCount, 2, "Expected another loading request once user initiates a reload")
+        sut.loadViewIfNeeded()
+        XCTAssertTrue(sut.isShowingLoadingIndicator, "Expected loading indicator once view is loaded")
 
-        sut.simulateUserInitiatedFeedReload()
-        XCTAssertEqual(loader.loadCountryListCallCount, 3, "Expected yet another loading request once user initiates another reload")
+        loader.completeCountryListLoading(at: 0)
+        XCTAssertFalse(sut.isShowingLoadingIndicator, "Expected no loading indicator once loading completes successfully")
+
+        loader.completeCountryListLoadingWithError(at: 1)
+        XCTAssertFalse(sut.isShowingLoadingIndicator, "Expected no loading indicator once user initiated loading completes with error")
     }
     
     // MARK: - Helpers

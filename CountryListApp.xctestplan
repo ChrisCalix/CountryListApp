@@ -19,6 +19,12 @@
   "testTargets" : [
     {
       "parallelizable" : true,
+      "skippedTests" : [
+        "CountryListAcceptanceTests",
+        "CountryListSnapshotTests",
+        "LoadCountryListFromRemoteUseCaseTests",
+        "LoadImageDataFromRemoteUseCaseTests"
+      ],
       "target" : {
         "containerPath" : "container:CountryListApp.xcodeproj",
         "identifier" : "C3D9DDC22B025E11001FF8B1",

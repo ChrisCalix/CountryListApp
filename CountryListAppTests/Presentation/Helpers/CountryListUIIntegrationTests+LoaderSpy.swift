@@ -22,11 +22,11 @@ extension CountryListUIIntegrationTests {
             countryListRequests.append(completion)
         }
 
-        func completeFeedLoading(with feed: [CountryListItem] = [], at index: Int = 0) {
+        func completeCountryListLoading(with feed: [CountryListItem] = [], at index: Int = 0) {
             countryListRequests[index](.success(feed))
         }
 
-        func completeFeedLoadingWithError(at index: Int = 0) {
+        func completeCountryListLoadingWithError(at index: Int = 0) {
             let error = NSError(domain: "an error", code: 0)
             countryListRequests[index](.failure(error))
         }
