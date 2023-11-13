@@ -38,24 +38,10 @@ final class LoadCountryListFromRemoteUseCaseTests: XCTestCase {
     func test_load_deliversErrorOnClientError() {
         let (sut, client) = makeSUT()
         
-        let expectedResult: RemoteCountryLoader.Result = failure(.connectivity)
-        let exp = expectation(description: "Wait for load")
-        
-        sut.load { receivedResult in
-            switch ( receivedResult, expectedResult) {
-            
-            case let (.failure(receivedError as RemoteCountryLoader.Error), .failure(expectedError as RemoteCountryLoader.Error)):
-                XCTAssertEqual(receivedError, expectedError)
-            default:
-                XCTFail("Expected result \(expectedResult) instead")
-            }
-            exp.fulfill()
+        expect(sut, toCompleteWith: failure(.connectivity)) {
+            let clientError = NSError(domain: "Test", code: 0)
+            client.complete(with: clientError)
         }
-        
-        let clientError = NSError(domain: "Test", code: 0)
-        client.complete(with: clientError)
-        
-        wait(for: [exp], timeout: 1.0)
     }
     
     func test_load_deliversErrorOnNon200HTTPResponse() {
@@ -64,70 +50,29 @@ final class LoadCountryListFromRemoteUseCaseTests: XCTestCase {
         let samples = [199, 201, 300, 400, 500]
         
         samples.enumerated().forEach { index, code in
-            let expectedResult: RemoteCountryLoader.Result = failure(.invalidData)
-            let exp = expectation(description: "Wait for load")
-            
-            sut.load { receivedResult in
-                switch ( receivedResult, expectedResult) {
-                
-                case let (.failure(receivedError as RemoteCountryLoader.Error), .failure(expectedError as RemoteCountryLoader.Error)):
-                    XCTAssertEqual(receivedError, expectedError)
-                default:
-                    XCTFail("Expected result \(expectedResult) instead")
-                }
-                exp.fulfill()
+            expect(sut, toCompleteWith: failure(.invalidData)) {
+                let json = makeItemsJSON([])
+                client.complete(withStatusCode: code, data: json, at: index)
             }
-            
-            let json = makeItemsJSON([])
-            client.complete(withStatusCode: code, data: json, at: index)
-            
-            wait(for: [exp], timeout: 1.0)
         }
     }
     
     func test_load_deliversErrorOn200HTTPResponseWithInvalidJSON() {
         let (sut, client) = makeSUT()
         
-        let expectedResult: RemoteCountryLoader.Result = failure(.invalidData)
-        let exp = expectation(description: "Wait for load")
-        
-        sut.load { receivedResult in
-            switch ( receivedResult, expectedResult) {
-            
-            case let (.failure(receivedError as RemoteCountryLoader.Error), .failure(expectedError as RemoteCountryLoader.Error)):
-                XCTAssertEqual(receivedError, expectedError)
-            default:
-                XCTFail("Expected result \(expectedResult) instead")
-            }
-            exp.fulfill()
+        expect(sut, toCompleteWith: failure(.invalidData)) {
+            let invalidJSON = Data("invalid json".utf8)
+            client.complete(withStatusCode: 200, data: invalidJSON)
         }
-        
-        let invalidJSON = Data("invalid json".utf8)
-        client.complete(withStatusCode: 200, data: invalidJSON)
-        
-        wait(for: [exp], timeout: 1.0)
     }
     
     func test_load_deliversNoItemsOn200HTTPResponseWithEmptyJSONList() {
         let (sut, client) = makeSUT()
         
-        let expectedResult: RemoteCountryLoader.Result = .success([])
-        let exp = expectation(description: "Wait for load")
-        
-        sut.load { receivedResult in
-            switch ( receivedResult, expectedResult) {
-            case let (.success(receivedItems), .success(expectedItems)):
-                XCTAssertEqual(receivedItems, expectedItems)
-            default:
-                XCTFail("Expected result \(expectedResult) instead")
-            }
-            exp.fulfill()
+        expect(sut, toCompleteWith: .success([])) {
+            let emptyListJSON = makeItemsJSON([])
+            client.complete(withStatusCode: 200, data: emptyListJSON)
         }
-        
-        let emptyListJSON = makeItemsJSON([])
-        client.complete(withStatusCode: 200, data: emptyListJSON)
-        
-        wait(for: [exp], timeout: 1.0)
     }
     
     // MARK: - Helpers
@@ -147,5 +92,26 @@ final class LoadCountryListFromRemoteUseCaseTests: XCTestCase {
     private func makeItemsJSON(_ items: [[String: Any]]) -> Data {
         let json = items
         return try! JSONSerialization.data(withJSONObject: json)
+    }
+    
+    private func expect(_ sut: RemoteCountryLoader, toCompleteWith expectedResult: RemoteCountryLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+        
+        let exp = expectation(description: "Wait for load")
+        
+        sut.load { receivedResult in
+            switch ( receivedResult, expectedResult) {
+            case let (.success(receivedItems), .success(expectedItems)):
+                XCTAssertEqual(receivedItems, expectedItems, file: file, line: line)
+            case let (.failure(receivedError as RemoteCountryLoader.Error), .failure(expectedError as RemoteCountryLoader.Error)):
+                XCTAssertEqual(receivedError, expectedError, file: file, line: line)
+            default:
+                XCTFail("Expected result \(expectedResult) instead", file: file, line: line)
+            }
+            exp.fulfill()
+        }
+        
+        action()
+        
+        wait(for: [exp], timeout: 1.0)
     }
 }
