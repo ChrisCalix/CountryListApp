@@ -106,7 +106,6 @@ final class LoadCountryListFromRemoteUseCaseTests: XCTestCase {
         expect(sut, toCompleteWith: .success(items)) {
             let json = makeItemsJSON([item1.json, item2.json])
             
-            print("emptyListJSON \(String(decoding: json, as: UTF8.self))")
             client.complete(withStatusCode: 200, data: json)
         }
     }
