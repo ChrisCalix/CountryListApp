@@ -32,9 +32,9 @@ struct CountryListItem: Decodable, Equatable {
     }
     
     static func == (lhs: CountryListItem, rhs: CountryListItem) -> Bool {
-        guard let lhsCommon = lhs.name?.common, let rhsCommon = rhs.name?.common else {
+        guard let lhsName = lhs.name, let rhsName = rhs.name else {
             return false
         }
-        return lhsCommon == rhsCommon
+        return lhsName.common == rhsName.common && lhsName.official == rhsName.official
     }
 }
