@@ -57,6 +57,31 @@ final class LoadImageDataFromRemoteUseCaseTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
+    func test_loadImageDataFromURL_deliversInvalidDataErrorOnNon200HTTPResponse() {
+        let (sut, client) = makeSUT()
+        
+        let samples = [199, 201, 300, 400, 500]
+        
+        samples.enumerated().forEach{ index, code in
+            
+            let expectedResult: ImageDataLoader.Result = failure(.invalidData)
+            let url = URL(string: "https://a-given-url.com")!
+            let exp = expectation(description: "Wait for load completion")
+            
+            _ = sut.loadImageData(from: url) { receivedResult in
+                switch (receivedResult, expectedResult) {
+                case let (.failure(receivedError as NSError), .failure(expectedError as NSError)):
+                    XCTAssertEqual(receivedError, expectedError)
+                default:
+                    XCTFail("Expected result \(expectedResult) got \(receivedResult) instead")
+                }
+                exp.fulfill()
+            }
+            client.complete(withStatusCode: code, data: anyData(), at: index)
+            
+            wait(for: [exp], timeout: 1.0)
+        }
+    }
     
     
     // MARK: - Helpers
