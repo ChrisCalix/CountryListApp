@@ -11,13 +11,7 @@ import XCTest
 final class CountryListUIIntegrationTests: XCTestCase {
     
     func test_countryListView_hasTitle() {
-        let loader = LoaderSpy()
-        let sut = CountryListUIComposer.countryComposedWith(
-            countryLoader: loader,
-            imageLoader: loader
-        )
-        trackForMemoryLeaks(loader)
-        trackForMemoryLeaks(sut)
+        let (sut, _) = makeSUT()
         
         sut.loadViewIfNeeded()
 
@@ -25,13 +19,7 @@ final class CountryListUIIntegrationTests: XCTestCase {
     }
     
     func test_loadCountryListActions_requestCountryListFromLoader() {
-        let loader = LoaderSpy()
-        let sut = CountryListUIComposer.countryComposedWith(
-            countryLoader: loader,
-            imageLoader: loader
-        )
-        trackForMemoryLeaks(loader)
-        trackForMemoryLeaks(sut)
+        let (sut, loader) = makeSUT()
         
         XCTAssertEqual(loader.loadCountryListCallCount, 0, "Expected no loading requests before view is loaded")
 
@@ -43,5 +31,15 @@ final class CountryListUIIntegrationTests: XCTestCase {
 
         sut.simulateUserInitiatedFeedReload()
         XCTAssertEqual(loader.loadCountryListCallCount, 3, "Expected yet another loading request once user initiates another reload")
+    }
+    
+    // MARK: - Helpers
+
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: CountryListViewController, loader: LoaderSpy) {
+        let loader = LoaderSpy()
+        let sut = CountryListUIComposer.countryComposedWith(countryLoader: loader, imageLoader: loader)
+        trackForMemoryLeaks(loader, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
+        return (sut, loader)
     }
 }
