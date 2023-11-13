@@ -22,8 +22,8 @@ extension CountryListUIIntegrationTests {
             countryListRequests.append(completion)
         }
 
-        func completeCountryListLoading(with feed: [CountryListItem] = [], at index: Int = 0) {
-            countryListRequests[index](.success(feed))
+        func completeCountryListLoading(with countryList: [CountryListItem] = [], at index: Int = 0) {
+            countryListRequests[index](.success(countryList))
         }
 
         func completeCountryListLoadingWithError(at index: Int = 0) {
@@ -31,7 +31,7 @@ extension CountryListUIIntegrationTests {
             countryListRequests[index](.failure(error))
         }
 
-        // MARK: - FeedImageDataLoader
+        // MARK: - ImageDataLoader
 
         private struct TaskSpy: ImageDataLoaderTask {
             let cancelCallback: () -> Void

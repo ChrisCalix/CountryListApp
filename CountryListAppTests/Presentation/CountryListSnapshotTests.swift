@@ -13,7 +13,7 @@ final class CountryListSnapshotTests: XCTestCase {
     func test_emptyCountryList() {
         let sut = makeSUT()
 
-        sut.display(emptyFeed())
+        sut.display(emptyCountryList())
 
         assert(snapshot: sut.snapshot(for: .iPhone13(style: .light)), named: "EMPTY_COUNTRY_LIST_light")
         assert(snapshot: sut.snapshot(for: .iPhone13(style: .dark)), named: "EMPTY_COUNTRY_LIST_dark")
@@ -42,15 +42,19 @@ final class CountryListSnapshotTests: XCTestCase {
     private func makeSUT() -> CountryListViewController {
         let client = HTTPClientSpy()
         let imageLoader = RemoteImageDataLoader(client: client)
-        let controller = CountryListUIComposer.countryComposedWith(countryLoader: AlwaysSucceedingFeedLoader(), imageLoader: imageLoader)
-       
+        let controller = CountryListUIComposer.countryComposedWith(
+            countryLoader: AlwaysSucceedingCountryListLoader(),
+            imageLoader: imageLoader,
+            loadingView: LoadingView()
+        )
+
         controller.loadViewIfNeeded()
         controller.tableView.showsVerticalScrollIndicator = false
         controller.tableView.showsHorizontalScrollIndicator = false
         return controller
     }
 
-    private func emptyFeed() -> [CountryCellController] {
+    private func emptyCountryList() -> [CountryCellController] {
         []
     }
     
@@ -85,7 +89,7 @@ final class CountryListSnapshotTests: XCTestCase {
     }
 }
 
-private class AlwaysSucceedingFeedLoader: CountryLoader {
+private class AlwaysSucceedingCountryListLoader: CountryLoader {
     func load(completion: @escaping (CountryLoader.Result) -> Void) {
         completion(.success([]))
     }
@@ -96,8 +100,8 @@ private extension CountryListViewController {
         errorView?.showAnimated(errorMessage)
     }
 
-    func display(_ feed: [CountryCellController]) {
-        tableModel = feed
+    func display(_ countryList: [CountryCellController]) {
+        tableModel = countryList
     }
 }
 

@@ -13,12 +13,19 @@ final class CountryListUIComposer {
     public static func countryComposedWith(
         countryLoader: CountryLoader,
         imageLoader: ImageDataLoader,
+        loadingView: Loading,
         selection: @escaping (String?) -> Void = { _ in }
     ) -> CountryListViewController {
-        let countryViewModel = CountryListViewModel(countryLoader: MainQueueDispatchDecorator(decorate: countryLoader))
+
+        let countryViewModel = CountryListViewModel(
+            countryLoader: MainQueueDispatchDecorator(
+                decorate: countryLoader
+            )
+        )
+
         let countryController = CountryListViewController.makeWith(
             viewModel: countryViewModel,
-            loading: MainQueueDispatchDecorator(decorate: LoaderView())
+            loading: MainQueueDispatchDecorator(decorate: loadingView)
         )
 
         countryViewModel.onCountryLoad = adaptCountryToCellController(
@@ -34,6 +41,7 @@ final class CountryListUIComposer {
         imageLoader: ImageDataLoader,
         selection: @escaping (String?) -> Void
     ) -> ([CountryListItem]) -> Void {
+        
         return { [weak controller] country in
             controller?.tableModel = country.map { model in
                 CountryCellController(
@@ -52,7 +60,7 @@ final class CountryListUIComposer {
 }
 
 private extension CountryListViewController {
-    static func makeWith(viewModel: CountryListViewModel, loading: LoaderProtocol) -> CountryListViewController {
+    static func makeWith(viewModel: CountryListViewModel, loading: Loading) -> CountryListViewController {
         let bundle = Bundle(for: CountryListViewController.self)
         let storyboard = UIStoryboard(name: "Country", bundle: bundle)
         let countryController = storyboard.instantiateInitialViewController() as! CountryListViewController

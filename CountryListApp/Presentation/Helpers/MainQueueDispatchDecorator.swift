@@ -39,11 +39,11 @@ extension MainQueueDispatchDecorator: ImageDataLoader where T == ImageDataLoader
     }
 }
 
-extension MainQueueDispatchDecorator: LoaderProtocol where T == LoaderProtocol {
-    func hasLoading() -> Bool {
-        self.decorate.hasLoading()
+extension MainQueueDispatchDecorator: Loading where T == Loading {
+    var isLoading: Bool {
+        self.decorate.isLoading
     }
-    
+
     func endToLoading() {
         self.dispatch {
             self.decorate.endToLoading()

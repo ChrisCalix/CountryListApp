@@ -30,7 +30,7 @@ extension Localized {
                 "COUNTRY_LIST_CONNECTION_ERROR",
                 tableName: table,
                 bundle: bundle,
-                comment: "Error message displayed when we can't load the image feed from the server.")
+                comment: "Error message displayed when we can't load the Country item from the server.")
         }
     }
 }

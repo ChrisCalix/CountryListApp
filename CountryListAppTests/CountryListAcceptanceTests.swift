@@ -10,23 +10,23 @@ import XCTest
 
 final class CountryListAcceptanceTests: XCTestCase {
     
-    func test_onLaunch_displaysRemoteFeedWhenCustomerHasConnectivity() {
-        
+    func test_onLaunch_displaysRemoteCountryWhenCustomerHasConnectivity() {
+
         let countryList = launch(httpClient: .online(response))
         
-        XCTAssertEqual(countryList.numberOfRenderedFeedImageViews(), 2)
-        XCTAssertEqual(countryList.renderedFeedImageData(at: 0), makeImageData())
-        XCTAssertEqual(countryList.renderedFeedImageData(at: 1), makeImageData())
+        XCTAssertEqual(countryList.numberOfRenderedCountryImageViews(), 2)
+        XCTAssertEqual(countryList.renderedCountryImageData(at: 0), makeImageData())
+        XCTAssertEqual(countryList.renderedCountryImageData(at: 1), makeImageData())
     }
     
-    func test_onLaunch_displaysCachedRemoteFeedWhenCustomerHasNoConnectivity() {
-        let onlineFeed = launch(httpClient: .online(response))
-        onlineFeed.simulateCountryImageViewVisible(at: 0)
-        onlineFeed.simulateCountryImageViewVisible(at: 1)
+    func test_onLaunch_displaysCachedRemoteCountryWhenCustomerHasNoConnectivity() {
+        let onlineCountryList = launch(httpClient: .online(response))
+        onlineCountryList.simulateCountryImageViewVisible(at: 0)
+        onlineCountryList.simulateCountryImageViewVisible(at: 1)
         
-        let offlineFeed = launch(httpClient: .offline)
+        let offlineCountryList = launch(httpClient: .offline)
         
-        XCTAssertEqual(offlineFeed.numberOfRenderedFeedImageViews(), 0)
+        XCTAssertEqual(offlineCountryList.numberOfRenderedCountryImageViews(), 0)
     }
     
     
@@ -49,7 +49,7 @@ final class CountryListAcceptanceTests: XCTestCase {
         case "http://image.com":
             return makeImageData()
         default:
-            return makeFeedData()
+            return makeCountryData()
         }
     }
     
@@ -57,7 +57,7 @@ final class CountryListAcceptanceTests: XCTestCase {
         return UIImage.make(withColor: .red).pngData()!
     }
     
-    private func makeFeedData() -> Data {
+    private func makeCountryData() -> Data {
         return try! JSONSerialization.data(withJSONObject: [
             [
                 "name": [

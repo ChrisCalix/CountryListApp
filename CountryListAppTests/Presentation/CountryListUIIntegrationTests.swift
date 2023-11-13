@@ -37,7 +37,7 @@ final class CountryListUIIntegrationTests: XCTestCase {
         XCTAssertFalse(sut.isShowingLoadingIndicator, "Expected no loading indicator once user initiated loading completes with error")
     }
 
-    func test_loadFeedCompletion_rendersSuccessfullyLoadedFeed() {
+    func test_loadCountryListCompletion_rendersSuccessfullyLoadedCountryList() {
         let image0 = makeImage(officialName: "a name", capital: ["a capital"])
         let image1 = makeImage(officialName: nil, capital: ["a capital"])
         let image2 = makeImage(officialName: nil, capital: [])
@@ -61,7 +61,7 @@ final class CountryListUIIntegrationTests: XCTestCase {
         XCTAssertEqual(sut.errorMessage, localized("COUNTRY_LIST_CONNECTION_ERROR"))
     }
 
-    func test_feedImageView_loadsImageURLWhenVisible() {
+    func test_countryImageView_loadsImageURLWhenVisible() {
         let image0 = makeImage(officialName: "a name", imageUrl: URL(string: "http://url-0.com")!, capital: ["a capital"])
         let image1 = makeImage(officialName: "a name", imageUrl: URL(string: "http://url-1.com")!, capital: ["a capital"])
         let (sut, loader) = makeSUT()
@@ -78,7 +78,7 @@ final class CountryListUIIntegrationTests: XCTestCase {
         XCTAssertEqual(loader.loadedImageURLs, [image0.flags.png, image1.flags.png], "Expected second image URL request once second view also becomes visible")
     }
     
-    func test_feedImageView_cancelsImageLoadingWhenNotVisibleAnymore() {
+    func test_countryImageView_cancelsImageLoadingWhenNotVisibleAnymore() {
         let image0 = makeImage(officialName: "a name", imageUrl: URL(string: "http://url-0.com")!, capital: ["a capital"])
         let image1 = makeImage(officialName: "a name", imageUrl: URL(string: "http://url-1.com")!, capital: ["a capital"])
         let (sut, loader) = makeSUT()
@@ -87,14 +87,14 @@ final class CountryListUIIntegrationTests: XCTestCase {
         loader.completeCountryListLoading(with: [image0, image1])
         XCTAssertEqual(loader.cancelledImageURLs, [], "Expected no cancelled image URL requests until image is not visible")
 
-        sut.simulateFeedImageViewNotVisible(at: 0)
+        sut.simulateCountryImageViewNotVisible(at: 0)
         XCTAssertEqual(loader.cancelledImageURLs, [image0.flags.png], "Expected one cancelled image URL request once first image is not visible anymore")
 
-        sut.simulateFeedImageViewNotVisible(at: 1)
+        sut.simulateCountryImageViewNotVisible(at: 1)
         XCTAssertEqual(loader.cancelledImageURLs, [image0.flags.png, image1.flags.png], "Expected two cancelled image URL requests once second image is also not visible anymore")
     }
     
-    func test_feedImageViewLoadingIndicator_isVisibleWhileLoadingImage() {
+    func test_countryImageViewLoadingIndicator_isVisibleWhileLoadingImage() {
         let (sut, loader) = makeSUT()
 
         sut.loadViewIfNeeded()
@@ -114,7 +114,7 @@ final class CountryListUIIntegrationTests: XCTestCase {
         XCTAssertEqual(view1?.isShowingImageLoadingIndicator, false, "Expected no loading indicator for second view once second image loading completes with error")
     }
     
-    func test_feedImageView_rendersImageLoadedFromURL() {
+    func test_countryImageView_rendersImageLoadedFromURL() {
         let (sut, loader) = makeSUT()
 
         sut.loadViewIfNeeded()
@@ -136,7 +136,7 @@ final class CountryListUIIntegrationTests: XCTestCase {
         XCTAssertEqual(view1?.renderedImage, imageData1, "Expected image for second view once second image loading completes successfully")
     }
 
-    func test_feedImageViewRetryButton_isVisibleOnImageURLLoadError() {
+    func test_countryImageViewRetryButton_isVisibleOnImageURLLoadError() {
         let (sut, loader) = makeSUT()
 
         sut.loadViewIfNeeded()
@@ -157,7 +157,7 @@ final class CountryListUIIntegrationTests: XCTestCase {
         XCTAssertEqual(view1?.isShowingRetryAction, true, "Expected retry action for second view once second image loading completes with error")
     }
     
-    func test_feedImageViewRetryButton_isVisibleOnInvalidImageData() {
+    func test_countryImageViewRetryButton_isVisibleOnInvalidImageData() {
         let (sut, loader) = makeSUT()
 
         sut.loadViewIfNeeded()
@@ -171,7 +171,7 @@ final class CountryListUIIntegrationTests: XCTestCase {
         XCTAssertEqual(view?.isShowingRetryAction, true, "Expected retry action once image loading completes with invalid image data")
     }
 
-    func test_feedImageViewRetryAction_retriesImageLoad() {
+    func test_countryImageViewRetryAction_retriesImageLoad() {
         let image0 = makeImage(imageUrl: URL(string: "http://url-0.com")!)
         let image1 = makeImage(imageUrl: URL(string: "http://url-1.com")!)
         let (sut, loader) = makeSUT()
@@ -194,7 +194,7 @@ final class CountryListUIIntegrationTests: XCTestCase {
         XCTAssertEqual(loader.loadedImageURLs, [image0.flags.png, image1.flags.png, image0.flags.png, image1.flags.png], "Expected fourth imageURL request after second view retry action")
     }
 
-    func test_feedImageView_preloadsImageURLWhenNearVisible() {
+    func test_countryImageView_preloadsImageURLWhenNearVisible() {
         let image0 = makeImage(imageUrl: URL(string: "http://url-0.com")!)
         let image1 = makeImage(imageUrl: URL(string: "http://url-1.com")!)
         let (sut, loader) = makeSUT()
@@ -203,14 +203,14 @@ final class CountryListUIIntegrationTests: XCTestCase {
         loader.completeCountryListLoading(with: [image0, image1])
         XCTAssertEqual(loader.loadedImageURLs, [], "Expected no image URL requests until image is near visible")
 
-        sut.simulateFeedImageViewNearVisible(at: 0)
+        sut.simulateCountryImageViewNearVisible(at: 0)
         XCTAssertEqual(loader.loadedImageURLs, [image0.flags.png], "Expected first image URL request once first image is near visible")
 
-        sut.simulateFeedImageViewNearVisible(at: 1)
+        sut.simulateCountryImageViewNearVisible(at: 1)
         XCTAssertEqual(loader.loadedImageURLs, [image0.flags.png, image1.flags.png], "Expected second image URL request once second image is near visible")
     }
 
-    func test_feedImageView_cancelsImageURLPreloadingWhenNotNearVisibleAnymore() {
+    func test_countryImageView_cancelsImageURLPreloadingWhenNotNearVisibleAnymore() {
         let image0 = makeImage(imageUrl: URL(string: "http://url-0.com")!)
         let image1 = makeImage(imageUrl: URL(string: "http://url-1.com")!)
         let (sut, loader) = makeSUT()
@@ -219,25 +219,25 @@ final class CountryListUIIntegrationTests: XCTestCase {
         loader.completeCountryListLoading(with: [image0, image1])
         XCTAssertEqual(loader.cancelledImageURLs, [], "Expected no cancelled image URL requests until image is not near visible")
 
-        sut.simulateFeedImageViewNotNearVisible(at: 0)
+        sut.simulateCountryImageViewNotNearVisible(at: 0)
         XCTAssertEqual(loader.cancelledImageURLs, [image0.flags.png], "Expected first cancelled image URL request once first image is not near visible anymore")
 
-        sut.simulateFeedImageViewNotNearVisible(at: 1)
+        sut.simulateCountryImageViewNotNearVisible(at: 1)
         XCTAssertEqual(loader.cancelledImageURLs, [image0.flags.png, image1.flags.png], "Expected second cancelled image URL request once second image is not near visible anymore")
     }
 
-    func test_feedImageView_doesNotRenderLoadedImageWhenNotVisibleAnymore() {
+    func test_countryImageView_doesNotRenderLoadedImageWhenNotVisibleAnymore() {
         let (sut, loader) = makeSUT()
         sut.loadViewIfNeeded()
         loader.completeCountryListLoading(with: [makeImage()])
 
-        let view = sut.simulateFeedImageViewNotVisible(at: 0)
+        let view = sut.simulateCountryImageViewNotVisible(at: 0)
         loader.completeImageLoading(with: anyImageData())
 
         XCTAssertNil(view?.renderedImage, "Expected no rendered image when an image load finishes after the view is not visible anymore")
     }
 
-    func test_loadFeedCompletion_dispatchesFromBackgroundToMainThread() {
+    func test_loadCountryListCompletion_dispatchesFromBackgroundToMainThread() {
         let (sut, loader) = makeSUT()
         sut.loadViewIfNeeded()
 
@@ -269,7 +269,11 @@ final class CountryListUIIntegrationTests: XCTestCase {
 
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: CountryListViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
-        let sut = CountryListUIComposer.countryComposedWith(countryLoader: loader, imageLoader: loader)
+        let sut = CountryListUIComposer.countryComposedWith(
+            countryLoader: loader,
+            imageLoader: loader,
+            loadingView: LoadingView()
+        )
         trackForMemoryLeaks(loader, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, loader)

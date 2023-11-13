@@ -16,7 +16,7 @@ extension CountryListViewController {
     }
     
     @discardableResult
-    func simulateFeedImageViewNotVisible(at row: Int) -> CountryCell? {
+    func simulateCountryImageViewNotVisible(at row: Int) -> CountryCell? {
         let view = simulateCountryImageViewVisible(at: row)
         
         let delegate = tableView.delegate
@@ -25,21 +25,21 @@ extension CountryListViewController {
         return view
     }
     
-    func simulateFeedImageViewNearVisible(at row: Int) {
+    func simulateCountryImageViewNearVisible(at row: Int) {
         let ds = tableView.prefetchDataSource
         let index = IndexPath(row: row, section: countryImagesSection)
         ds?.tableView(tableView, prefetchRowsAt: [index])
     }
     
-    func simulateFeedImageViewNotNearVisible(at row: Int) {
-        simulateFeedImageViewNearVisible(at: row)
+    func simulateCountryImageViewNotNearVisible(at row: Int) {
+        simulateCountryImageViewNearVisible(at: row)
         
         let ds = tableView.prefetchDataSource
         let index = IndexPath(row: row, section: countryImagesSection)
         ds?.tableView?(tableView, cancelPrefetchingForRowsAt: [index])
     }
     
-    func renderedFeedImageData(at index: Int) -> Data? {
+    func renderedCountryImageData(at index: Int) -> Data? {
         return simulateCountryImageViewVisible(at: index)?.renderedImage
     }
 
@@ -48,15 +48,15 @@ extension CountryListViewController {
     }
     
     var isShowingLoadingIndicator: Bool {
-        return loader?.hasLoading() ?? false
+        return loader?.isLoading ?? false
     }
     
-    func numberOfRenderedFeedImageViews() -> Int {
+    func numberOfRenderedCountryImageViews() -> Int {
         return tableView.numberOfRows(inSection: countryImagesSection)
     }
     
     func countryImageView(at row: Int) -> UITableViewCell? {
-        guard numberOfRenderedFeedImageViews() > row else { return nil }
+        guard numberOfRenderedCountryImageViews() > row else { return nil }
         let ds = tableView.dataSource
         let index = IndexPath(row: row, section: countryImagesSection)
         return ds?.tableView(tableView, cellForRowAt: index)

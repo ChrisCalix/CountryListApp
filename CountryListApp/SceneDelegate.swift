@@ -20,7 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private lazy var navigationController = UINavigationController(
         rootViewController: CountryListUIComposer.countryComposedWith(
             countryLoader: self.makeRemoteCountryLoader(),
-            imageLoader: self.makeRemoteImageLoader(),
+            imageLoader: self.makeRemoteImageLoader(), 
+            loadingView: self.makeLoadingView(),
             selection: self.showDetails
         )
     )
@@ -53,7 +54,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func makeRemoteImageLoader() -> ImageDataLoader {
         return RemoteImageDataLoader(client: httpClient)
     }
-    
+
+    private func makeLoadingView() -> Loading {
+        return LoadingView()
+    }
+
     func showDetails(for name: String?) {
         
     }

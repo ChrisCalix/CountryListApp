@@ -10,7 +10,7 @@ import UIKit
 final class CountryListViewController: UITableViewController, UITableViewDataSourcePrefetching {
     
     @IBOutlet private(set) public var errorView: ErrorView?
-    var loader: LoaderProtocol?
+    var loader: Loading?
 
     var viewModel: CountryListViewModel? {
         didSet { bind() }

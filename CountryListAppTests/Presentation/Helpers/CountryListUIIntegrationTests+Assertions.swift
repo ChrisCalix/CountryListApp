@@ -9,12 +9,12 @@ import XCTest
 @testable import CountryListApp
 
 extension CountryListUIIntegrationTests {
-    func assertThat(_ sut: CountryListViewController, isRendering feed: [CountryListItem], file: StaticString = #filePath, line: UInt = #line) {
-        guard sut.numberOfRenderedFeedImageViews() == feed.count else {
-            return XCTFail("Expected \(feed.count) images, got \(sut.numberOfRenderedFeedImageViews()) instead.", file: file, line: line)
+    func assertThat(_ sut: CountryListViewController, isRendering countryList: [CountryListItem], file: StaticString = #filePath, line: UInt = #line) {
+        guard sut.numberOfRenderedCountryImageViews() == countryList.count else {
+            return XCTFail("Expected \(countryList.count) images, got \(sut.numberOfRenderedCountryImageViews()) instead.", file: file, line: line)
         }
 
-        feed.enumerated().forEach { index, image in
+        countryList.enumerated().forEach { index, image in
             assertThat(sut, hasViewConfiguredFor: image, at: index, file: file, line: line)
         }
     }
