@@ -17,8 +17,7 @@ final class CountryListViewModel {
     }
     
     var title: String {
-        // TODO: Localized.Country.Title
-        "Country"
+        Localized.CountryList.title
     }
     
     var onLoadingStateChange: Observer<Bool>?
@@ -39,7 +38,7 @@ final class CountryListViewModel {
         case .success(let country):
             onCountryLoad?(country)
         case .failure:
-            onErrorStateChange?("error to move localized")
+            onErrorStateChange?(Localized.CountryList.loadError)
         }
     }
 }

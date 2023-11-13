@@ -41,6 +41,10 @@
 		C3CF66152B028F5200D0CDEB /* CountryCell+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CF66142B028F5200D0CDEB /* CountryCell+TestHelpers.swift */; };
 		C3CF66172B028F8500D0CDEB /* UIButton+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CF66162B028F8500D0CDEB /* UIButton+TestHelpers.swift */; };
 		C3CF661B2B0294B600D0CDEB /* CountryList.strings in Resources */ = {isa = PBXBuildFile; fileRef = C3CF661D2B0294B600D0CDEB /* CountryList.strings */; };
+		C3CF66202B0295AD00D0CDEB /* Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CF661F2B0295AD00D0CDEB /* Localized.swift */; };
+		C3CF66222B02A60A00D0CDEB /* CountryListUIIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CF66212B02A60A00D0CDEB /* CountryListUIIntegrationTests.swift */; };
+		C3CF66252B02A6B600D0CDEB /* CountryListUIIntegrationTests+LoaderSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CF66242B02A6B600D0CDEB /* CountryListUIIntegrationTests+LoaderSpy.swift */; };
+		C3CF66272B02A7EF00D0CDEB /* CountryListUIIntegrationTests+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CF66262B02A7EF00D0CDEB /* CountryListUIIntegrationTests+Localization.swift */; };
 		C3D9DDAC2B025CFF001FF8B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D9DDAB2B025CFF001FF8B1 /* AppDelegate.swift */; };
 		C3D9DDAE2B025CFF001FF8B1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D9DDAD2B025CFF001FF8B1 /* SceneDelegate.swift */; };
 		C3D9DDB52B025D00001FF8B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3D9DDB42B025D00001FF8B1 /* Assets.xcassets */; };
@@ -107,6 +111,10 @@
 		C3CF66182B02947600D0CDEB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		C3CF661C2B0294B600D0CDEB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CountryList.strings; sourceTree = "<group>"; };
 		C3CF661E2B0294B900D0CDEB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/CountryList.strings; sourceTree = "<group>"; };
+		C3CF661F2B0295AD00D0CDEB /* Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localized.swift; sourceTree = "<group>"; };
+		C3CF66212B02A60A00D0CDEB /* CountryListUIIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListUIIntegrationTests.swift; sourceTree = "<group>"; };
+		C3CF66242B02A6B600D0CDEB /* CountryListUIIntegrationTests+LoaderSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CountryListUIIntegrationTests+LoaderSpy.swift"; sourceTree = "<group>"; };
+		C3CF66262B02A7EF00D0CDEB /* CountryListUIIntegrationTests+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CountryListUIIntegrationTests+Localization.swift"; sourceTree = "<group>"; };
 		C3D9DDA82B025CFF001FF8B1 /* CountryListApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountryListApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3D9DDAB2B025CFF001FF8B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C3D9DDAD2B025CFF001FF8B1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -202,6 +210,7 @@
 			children = (
 				C3CF65E02B02806000D0CDEB /* UI */,
 				C3CF65E12B02806800D0CDEB /* MainQueueDispatchDecorator.swift */,
+				C3CF661F2B0295AD00D0CDEB /* Localized.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -248,6 +257,7 @@
 				C3CF65F22B02859800D0CDEB /* snapshots */,
 				C3CF65EA2B0284CB00D0CDEB /* Helpers */,
 				C3CF65E82B0283DC00D0CDEB /* CountryListSnapshotTests.swift */,
+				C3CF66212B02A60A00D0CDEB /* CountryListUIIntegrationTests.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -258,6 +268,8 @@
 				C3CF65EB2B0284D800D0CDEB /* XCTestCase+Snapshot.swift */,
 				C3CF65EE2B02852F00D0CDEB /* UIViewController+Snapshot.swift */,
 				C3CF65F02B02854F00D0CDEB /* SnapshotConfiguration.swift */,
+				C3CF66242B02A6B600D0CDEB /* CountryListUIIntegrationTests+LoaderSpy.swift */,
+				C3CF66262B02A7EF00D0CDEB /* CountryListUIIntegrationTests+Localization.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -530,6 +542,7 @@
 				C3D9DDEB2B027057001FF8B1 /* ImageDataLoader.swift in Sources */,
 				C3D9DDDF2B0262A8001FF8B1 /* CountryListItemsMapper.swift in Sources */,
 				C3CF65CE2B027C9700D0CDEB /* ErrorView.swift in Sources */,
+				C3CF66202B0295AD00D0CDEB /* Localized.swift in Sources */,
 				C3CF65D12B027DBA00D0CDEB /* CountryCellController.swift in Sources */,
 				C3CF65D32B027DDA00D0CDEB /* UITableView+DequeueReusableCell.swift in Sources */,
 				C3D9DDE22B0262DC001FF8B1 /* HTTPURLResponse+StatusCode.swift in Sources */,
@@ -542,14 +555,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3CF66082B028C9B00D0CDEB /* CountryListAcceptanceTests.swift in Sources */,
+				C3CF66222B02A60A00D0CDEB /* CountryListUIIntegrationTests.swift in Sources */,
 				C3CF65E92B0283DC00D0CDEB /* CountryListSnapshotTests.swift in Sources */,
 				C3CF660B2B028D7E00D0CDEB /* HTTPClientStub.swift in Sources */,
+				C3CF66272B02A7EF00D0CDEB /* CountryListUIIntegrationTests+Localization.swift in Sources */,
 				C3CF66132B028F2100D0CDEB /* UIControl+TestHelpers.swift in Sources */,
 				C3CF65EC2B0284D800D0CDEB /* XCTestCase+Snapshot.swift in Sources */,
 				C3CF660F2B028ECE00D0CDEB /* CountryListViewController+TestHelpers.swift in Sources */,
 				C3CF65EF2B02852F00D0CDEB /* UIViewController+Snapshot.swift in Sources */,
 				C3D9DDE42B0266F2001FF8B1 /* SharedTestHelper.swift in Sources */,
 				C3D9DDC62B025E11001FF8B1 /* LoadCountryListFromRemoteUseCaseTests.swift in Sources */,
+				C3CF66252B02A6B600D0CDEB /* CountryListUIIntegrationTests+LoaderSpy.swift in Sources */,
 				C3CF65F12B02854F00D0CDEB /* SnapshotConfiguration.swift in Sources */,
 				C3CF66152B028F5200D0CDEB /* CountryCell+TestHelpers.swift in Sources */,
 				C3D9DDE62B026ED0001FF8B1 /* LoadImageDataFromRemoteUseCaseTests.swift in Sources */,

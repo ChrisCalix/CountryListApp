@@ -5,5 +5,5 @@
   Created by Sonic on 13/11/23.
   
 */
-"COUNTRY_LIST_VIEW_TITLE" = "Countries"
-"COUNTRY_LIST_CONNECTION_ERROR" = "Couldn't connect to server"
+"COUNTRY_LIST_VIEW_TITLE" = "Countries";
+"COUNTRY_LIST_CONNECTION_ERROR" = "Couldn't connect to server";
