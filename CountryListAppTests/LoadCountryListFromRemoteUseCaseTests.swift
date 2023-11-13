@@ -85,6 +85,29 @@ final class LoadCountryListFromRemoteUseCaseTests: XCTestCase {
         }
     }
     
+    func test_load_deliversErrorOn200HTTPResponseWithInvalidJSON() {
+        let (sut, client) = makeSUT()
+        
+        let expectedResult: RemoteCountryLoader.Result = failure(.invalidData)
+        let exp = expectation(description: "Wait for load")
+        
+        sut.load { receivedResult in
+            switch ( receivedResult, expectedResult) {
+            
+            case let (.failure(receivedError as RemoteCountryLoader.Error), .failure(expectedError as RemoteCountryLoader.Error)):
+                XCTAssertEqual(receivedError, expectedError)
+            default:
+                XCTFail("Expected result \(expectedResult) instead")
+            }
+            exp.fulfill()
+        }
+        
+        let invalidJSON = Data("invalid json".utf8)
+        client.complete(withStatusCode: 200, data: invalidJSON)
+        
+        wait(for: [exp], timeout: 1.0)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(url: URL = URL(string: "https://a-url.com")!, file: StaticString = #file, line: UInt = #line) -> (sut: RemoteCountryLoader, client: HTTPClientSpy) {
