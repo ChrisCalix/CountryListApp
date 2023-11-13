@@ -11,7 +11,7 @@ final class CountryListUIComposer {
     private init() {}
     
     public static func countryComposedWith(
-        countryLoader: CountryLoader,
+        countryLoader: CountryListLoader,
         imageLoader: ImageDataLoader,
         loadingView: Loading,
         selection: @escaping (String?) -> Void = { _ in }

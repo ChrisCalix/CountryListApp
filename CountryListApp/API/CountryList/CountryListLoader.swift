@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol CountryLoader {
+protocol CountryListLoader {
     typealias Result = Swift.Result<[CountryListItem], Error>
     
     func load(completion: @escaping (Result) -> Void)

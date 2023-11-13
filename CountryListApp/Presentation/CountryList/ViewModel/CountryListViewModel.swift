@@ -10,9 +10,9 @@ import Foundation
 final class CountryListViewModel {
     typealias Observer<T> = (T) -> Void
     
-    private let countryLoader: CountryLoader
+    private let countryLoader: CountryListLoader
     
-    init(countryLoader: CountryLoader) {
+    init(countryLoader: CountryListLoader) {
         self.countryLoader = countryLoader
     }
     
@@ -32,7 +32,7 @@ final class CountryListViewModel {
         }
     }
     
-    private func handle(_ result: CountryLoader.Result) {
+    private func handle(_ result: CountryListLoader.Result) {
         defer { onLoadingStateChange?(false)}
         switch result {
         case .success(let country):

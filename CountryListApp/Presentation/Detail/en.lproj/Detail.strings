@@ -1,0 +1,9 @@
+/* 
+  Detail.strings
+  CountryListApp
+
+  Created by Christian Calixto on 13/11/23.
+  
+*/
+"DETAIL_VIEW_TITLE" = "Detail";
+"DETAIL_CONNECTION_ERROR" = "Couldn't connect to server";

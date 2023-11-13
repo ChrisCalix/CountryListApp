@@ -9,16 +9,16 @@ import XCTest
 @testable import CountryListApp
 
 extension CountryListUIIntegrationTests {
-    class LoaderSpy: CountryLoader, ImageDataLoader {
+    class LoaderSpy: CountryListLoader, ImageDataLoader {
         // MARK: - CountryLoader
 
-        private var countryListRequests = [(CountryLoader.Result) -> Void]()
+        private var countryListRequests = [(CountryListLoader.Result) -> Void]()
 
         var loadCountryListCallCount: Int {
             return countryListRequests.count
         }
 
-        func load(completion: @escaping (CountryLoader.Result) -> Void) {
+        func load(completion: @escaping (CountryListLoader.Result) -> Void) {
             countryListRequests.append(completion)
         }
 

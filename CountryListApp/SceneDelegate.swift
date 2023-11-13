@@ -45,7 +45,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
     }
     
-    private func makeRemoteCountryLoader() -> CountryLoader {
+    private func makeRemoteCountryLoader() -> CountryListLoader {
         let url = CountryListEndpoint.getAll.url(baseURL: baseURL)
         let remoteCountryLoader = RemoteCountryListLoader(url: url, client: httpClient)
         return remoteCountryLoader

@@ -89,8 +89,8 @@ final class CountryListSnapshotTests: XCTestCase {
     }
 }
 
-private class AlwaysSucceedingCountryListLoader: CountryLoader {
-    func load(completion: @escaping (CountryLoader.Result) -> Void) {
+private class AlwaysSucceedingCountryListLoader: CountryListLoader {
+    func load(completion: @escaping (CountryListLoader.Result) -> Void) {
         completion(.success([]))
     }
 }

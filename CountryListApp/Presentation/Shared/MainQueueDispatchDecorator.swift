@@ -23,8 +23,8 @@ final class MainQueueDispatchDecorator<T> {
     }
 }
 
-extension MainQueueDispatchDecorator: CountryLoader where T == CountryLoader {
-    func load(completion: @escaping (CountryLoader.Result) -> Void) {
+extension MainQueueDispatchDecorator: CountryListLoader where T == CountryListLoader {
+    func load(completion: @escaping (CountryListLoader.Result) -> Void) {
         decorate.load { [weak self] result in
             self?.dispatch { completion(result)}
         }
