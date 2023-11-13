@@ -1,5 +1,5 @@
 //
-//  RemoteCountryLoader.swift
+//  RemoteCountryListLoader.swift
 //  CountryListApp
 //
 //  Created by Sonic on 13/11/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class RemoteCountryLoader: CountryLoader {
+final class RemoteCountryListLoader: CountryLoader {
     private let url: URL
     private let client: HTTPClient
     
@@ -29,7 +29,7 @@ final class RemoteCountryLoader: CountryLoader {
             
             switch result {
             case let .success((data, response)):
-                completion(RemoteCountryLoader.map(data, from: response))
+                completion(RemoteCountryListLoader.map(data, from: response))
             case .failure:
                 completion(.failure(Error.connectivity))
             }

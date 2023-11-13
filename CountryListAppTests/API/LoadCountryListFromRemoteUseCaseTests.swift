@@ -114,9 +114,9 @@ final class LoadCountryListFromRemoteUseCaseTests: XCTestCase {
     func test_load_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
         let url = URL(string: "http://any-url.com")!
         let client = HTTPClientSpy()
-        var sut: RemoteCountryLoader? = RemoteCountryLoader(url: url, client: client)
+        var sut: RemoteCountryListLoader? = RemoteCountryListLoader(url: url, client: client)
         
-        var capturedResults = [RemoteCountryLoader.Result]()
+        var capturedResults = [RemoteCountryListLoader.Result]()
         sut?.load { capturedResults.append($0) }
         
         sut = nil
@@ -127,15 +127,15 @@ final class LoadCountryListFromRemoteUseCaseTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT(url: URL = URL(string: "https://a-url.com")!, file: StaticString = #file, line: UInt = #line) -> (sut: RemoteCountryLoader, client: HTTPClientSpy) {
+    private func makeSUT(url: URL = URL(string: "https://a-url.com")!, file: StaticString = #file, line: UInt = #line) -> (sut: RemoteCountryListLoader, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
-        let sut = RemoteCountryLoader(url: url, client: client)
+        let sut = RemoteCountryListLoader(url: url, client: client)
         trackForMemoryLeaks(sut, file: file, line: line)
         trackForMemoryLeaks(client, file: file, line: line)
         return (sut, client)
     }
     
-    private func failure(_ error: RemoteCountryLoader.Error) -> RemoteCountryLoader.Result {
+    private func failure(_ error: RemoteCountryListLoader.Error) -> RemoteCountryListLoader.Result {
         return .failure(error)
     }
     
@@ -185,7 +185,7 @@ final class LoadCountryListFromRemoteUseCaseTests: XCTestCase {
         return try! JSONSerialization.data(withJSONObject: json)
     }
     
-    private func expect(_ sut: RemoteCountryLoader, toCompleteWith expectedResult: RemoteCountryLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+    private func expect(_ sut: RemoteCountryListLoader, toCompleteWith expectedResult: RemoteCountryListLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         
         let exp = expectation(description: "Wait for load")
         
@@ -193,7 +193,7 @@ final class LoadCountryListFromRemoteUseCaseTests: XCTestCase {
             switch ( receivedResult, expectedResult) {
             case let (.success(receivedItems), .success(expectedItems)):
                 XCTAssertEqual(receivedItems, expectedItems, file: file, line: line)
-            case let (.failure(receivedError as RemoteCountryLoader.Error), .failure(expectedError as RemoteCountryLoader.Error)):
+            case let (.failure(receivedError as RemoteCountryListLoader.Error), .failure(expectedError as RemoteCountryListLoader.Error)):
                 XCTAssertEqual(receivedError, expectedError, file: file, line: line)
             default:
                 XCTFail("Expected result \(expectedResult) instead", file: file, line: line)
