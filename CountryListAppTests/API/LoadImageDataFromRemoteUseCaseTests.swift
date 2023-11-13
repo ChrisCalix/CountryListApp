@@ -17,4 +17,17 @@ final class LoadImageDataFromRemoteUseCaseTests: XCTestCase {
         
         XCTAssertTrue(client.requestedURLs.isEmpty)
     }
+    
+    func test_loadImageDataFromURL_requestsDataFromURL() {
+        let url = URL(string: "https://a-given0url.com")!
+        let client = HTTPClientSpy()
+        let sut = RemoteImageDataLoader(client: client)
+        
+        trackForMemoryLeaks(client)
+        trackForMemoryLeaks(sut)
+        
+        _ = sut.loadImageData(from: url) { _ in }
+        
+        XCTAssertEqual(client.requestedURLs, [url])
+    }
 }
