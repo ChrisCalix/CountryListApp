@@ -158,9 +158,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AAA309AC2B02D60200F923BF /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				C3CF65E12B02806800D0CDEB /* MainQueueDispatchDecorator.swift */,
+				C3CF661F2B0295AD00D0CDEB /* Localized.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		C3CF65BE2B027A0300D0CDEB /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				AAA309AC2B02D60200F923BF /* Shared */,
 				C3CF65CA2B027BFB00D0CDEB /* Helpers */,
 				C3CF65BF2B027A4000D0CDEB /* CountryList */,
 			);
@@ -211,9 +221,10 @@
 		C3CF65CA2B027BFB00D0CDEB /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				C3CF65E02B02806000D0CDEB /* UI */,
-				C3CF65E12B02806800D0CDEB /* MainQueueDispatchDecorator.swift */,
-				C3CF661F2B0295AD00D0CDEB /* Localized.swift */,
+				C3CF65CB2B027C1100D0CDEB /* UITableView+SizeHeader.swift */,
+				C3CF65D22B027DDA00D0CDEB /* UITableView+DequeueReusableCell.swift */,
+				C3CF65D92B027E7B00D0CDEB /* UIImageView+Animations.swift */,
+				C3CF65DB2B027E9600D0CDEB /* UIView+Shimmering.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -241,17 +252,6 @@
 				C3CF65DE2B027FD600D0CDEB /* CountryListUIComposer.swift */,
 			);
 			path = Composer;
-			sourceTree = "<group>";
-		};
-		C3CF65E02B02806000D0CDEB /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				C3CF65CB2B027C1100D0CDEB /* UITableView+SizeHeader.swift */,
-				C3CF65D22B027DDA00D0CDEB /* UITableView+DequeueReusableCell.swift */,
-				C3CF65D92B027E7B00D0CDEB /* UIImageView+Animations.swift */,
-				C3CF65DB2B027E9600D0CDEB /* UIView+Shimmering.swift */,
-			);
-			path = UI;
 			sourceTree = "<group>";
 		};
 		C3CF65E72B0283B800D0CDEB /* Presentation */ = {
