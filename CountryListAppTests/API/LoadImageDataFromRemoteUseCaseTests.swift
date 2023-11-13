@@ -83,6 +83,54 @@ final class LoadImageDataFromRemoteUseCaseTests: XCTestCase {
         }
     }
     
+    func test_loadImageDataFromURL_deliversInvalidDataErrorOn200HTTPResponseWithEmptyData() {
+        let (sut, client) = makeSUT()
+
+        let expectedResult: ImageDataLoader.Result = failure(.invalidData)
+        let url = URL(string: "https://a-given-url.com")!
+        let exp = expectation(description: "Wait for load completion")
+        
+        _ = sut.loadImageData(from: url) { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.failure(receivedError as NSError), .failure(expectedError as NSError)):
+                XCTAssertEqual(receivedError, expectedError)
+            default:
+                XCTFail("Expected result \(expectedResult) got \(receivedResult) instead")
+            }
+            exp.fulfill()
+        }
+        
+        let emptyData = Data()
+        client.complete(withStatusCode: 200, data: emptyData)
+        
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    func test_loadImageDataFromURL_deliversReceivedNonEmptyDataOn200HTTPResponse() {
+        let (sut, client) = makeSUT()
+        let nonEmptyData = Data("non-empty data".utf8)
+        
+        let expectedResult: ImageDataLoader.Result = .success(nonEmptyData)
+        let url = URL(string: "https://a-given-url.com")!
+        let exp = expectation(description: "Wait for load completion")
+        
+        _ = sut.loadImageData(from: url) { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.success(receivedData), .success(expectedData)):
+                XCTAssertEqual(receivedData, expectedData)
+            case let (.failure(receivedError as NSError), .failure(expectedError as NSError)):
+                XCTAssertEqual(receivedError, expectedError)
+            default:
+                XCTFail("Expected result \(expectedResult) got \(receivedResult) instead")
+            }
+            exp.fulfill()
+        }
+        
+        client.complete(withStatusCode: 200, data: nonEmptyData)
+        
+        wait(for: [exp], timeout: 1.0)
+    }
+    
     
     // MARK: - Helpers
     
