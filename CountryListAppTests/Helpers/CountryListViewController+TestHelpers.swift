@@ -42,12 +42,13 @@ extension CountryListViewController {
     func renderedFeedImageData(at index: Int) -> Data? {
         return simulateCountryImageViewVisible(at: index)?.renderedImage
     }
+
     var errorMessage: String? {
         return errorView?.message
     }
     
     var isShowingLoadingIndicator: Bool {
-        return loader.isLoading
+        return loader?.hasLoading() ?? false
     }
     
     func numberOfRenderedFeedImageViews() -> Int {

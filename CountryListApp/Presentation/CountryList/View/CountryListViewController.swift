@@ -10,9 +10,8 @@ import UIKit
 final class CountryListViewController: UITableViewController, UITableViewDataSourcePrefetching {
     
     @IBOutlet private(set) public var errorView: ErrorView?
-    var loader = LoaderView()
-    
-    
+    var loader: LoaderProtocol?
+
     var viewModel: CountryListViewModel? {
         didSet { bind() }
     }
@@ -36,9 +35,9 @@ final class CountryListViewController: UITableViewController, UITableViewDataSou
         
         viewModel?.onLoadingStateChange = { [weak self] isLoading in
             if isLoading {
-                self?.loader.beginToLoading(in: self)
+                self?.loader?.beginToLoading(in: self)
             } else {
-                self?.loader.endToLoading()
+                self?.loader?.endToLoading()
             }
         }
         

@@ -6,8 +6,17 @@
 //
 
 import UIKit
+protocol LoaderProtocol {
+    func beginToLoading(in viewController: UIViewController?)
+    func endToLoading()
+    func hasLoading() -> Bool
+}
 
-final class LoaderView {
+final class LoaderView: LoaderProtocol {
+    func hasLoading() -> Bool {
+        isLoading
+    }
+    
     var alert: UIAlertController
     var isLoading: Bool
     

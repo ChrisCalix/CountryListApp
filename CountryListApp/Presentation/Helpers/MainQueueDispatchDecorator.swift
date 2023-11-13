@@ -5,6 +5,7 @@
 //  Created by Sonic on 13/11/23.
 //
 
+import UIKit
 import Foundation
 
 final class MainQueueDispatchDecorator<T> {
@@ -34,6 +35,24 @@ extension MainQueueDispatchDecorator: ImageDataLoader where T == ImageDataLoader
     func loadImageData(from url: URL, completion: @escaping (ImageDataLoader.Result) -> Void) -> ImageDataLoaderTask {
         return decorate.loadImageData(from: url) { [weak self] result in
             self?.dispatch { completion(result) }
+        }
+    }
+}
+
+extension MainQueueDispatchDecorator: LoaderProtocol where T == LoaderProtocol {
+    func hasLoading() -> Bool {
+        self.decorate.hasLoading()
+    }
+    
+    func endToLoading() {
+        self.dispatch {
+            self.decorate.endToLoading()
+        }
+    }
+    
+    func beginToLoading(in viewController: UIViewController?) {
+        self.dispatch {
+            self.decorate.beginToLoading(in: viewController)
         }
     }
 }
