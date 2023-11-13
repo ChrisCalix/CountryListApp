@@ -39,22 +39,9 @@ final class LoadImageDataFromRemoteUseCaseTests: XCTestCase {
         let (sut, client) = makeSUT()
         let clientError = NSError(domain: "a client error", code: 0)
         
-        let expectedResult: ImageDataLoader.Result = failure(.connectivity)
-        let url = URL(string: "https://a-given-url.com")!
-        let exp = expectation(description: "Wait for load completion")
-        
-        _ = sut.loadImageData(from: url) { receivedResult in
-            switch (receivedResult, expectedResult) {
-            case let (.failure(receivedError as NSError), .failure(expectedError as NSError)):
-                XCTAssertEqual(receivedError, expectedError)
-            default:
-                XCTFail("Expected result \(expectedResult) got \(receivedResult) instead")
-            }
-            exp.fulfill()
-        }
-        client.complete(with: clientError)
-        
-        wait(for: [exp], timeout: 1.0)
+        expect(sut, toCompleteWith: failure(.connectivity), when: {
+            client.complete(with: clientError)
+        })
     }
     
     func test_loadImageDataFromURL_deliversInvalidDataErrorOnNon200HTTPResponse() {
@@ -63,74 +50,29 @@ final class LoadImageDataFromRemoteUseCaseTests: XCTestCase {
         let samples = [199, 201, 300, 400, 500]
         
         samples.enumerated().forEach{ index, code in
-            
-            let expectedResult: ImageDataLoader.Result = failure(.invalidData)
-            let url = URL(string: "https://a-given-url.com")!
-            let exp = expectation(description: "Wait for load completion")
-            
-            _ = sut.loadImageData(from: url) { receivedResult in
-                switch (receivedResult, expectedResult) {
-                case let (.failure(receivedError as NSError), .failure(expectedError as NSError)):
-                    XCTAssertEqual(receivedError, expectedError)
-                default:
-                    XCTFail("Expected result \(expectedResult) got \(receivedResult) instead")
-                }
-                exp.fulfill()
-            }
-            client.complete(withStatusCode: code, data: anyData(), at: index)
-            
-            wait(for: [exp], timeout: 1.0)
+            expect(sut, toCompleteWith: failure(.invalidData), when: {
+                client.complete(withStatusCode: code, data: anyData(), at: index)
+            })
         }
     }
     
     func test_loadImageDataFromURL_deliversInvalidDataErrorOn200HTTPResponseWithEmptyData() {
         let (sut, client) = makeSUT()
 
-        let expectedResult: ImageDataLoader.Result = failure(.invalidData)
-        let url = URL(string: "https://a-given-url.com")!
-        let exp = expectation(description: "Wait for load completion")
-        
-        _ = sut.loadImageData(from: url) { receivedResult in
-            switch (receivedResult, expectedResult) {
-            case let (.failure(receivedError as NSError), .failure(expectedError as NSError)):
-                XCTAssertEqual(receivedError, expectedError)
-            default:
-                XCTFail("Expected result \(expectedResult) got \(receivedResult) instead")
-            }
-            exp.fulfill()
-        }
-        
-        let emptyData = Data()
-        client.complete(withStatusCode: 200, data: emptyData)
-        
-        wait(for: [exp], timeout: 1.0)
+        expect(sut, toCompleteWith: failure(.invalidData), when: {
+            let emptyData = Data()
+            client.complete(withStatusCode: 200, data: emptyData)
+        })
     }
     
     func test_loadImageDataFromURL_deliversReceivedNonEmptyDataOn200HTTPResponse() {
         let (sut, client) = makeSUT()
         let nonEmptyData = Data("non-empty data".utf8)
         
-        let expectedResult: ImageDataLoader.Result = .success(nonEmptyData)
-        let url = URL(string: "https://a-given-url.com")!
-        let exp = expectation(description: "Wait for load completion")
-        
-        _ = sut.loadImageData(from: url) { receivedResult in
-            switch (receivedResult, expectedResult) {
-            case let (.success(receivedData), .success(expectedData)):
-                XCTAssertEqual(receivedData, expectedData)
-            case let (.failure(receivedError as NSError), .failure(expectedError as NSError)):
-                XCTAssertEqual(receivedError, expectedError)
-            default:
-                XCTFail("Expected result \(expectedResult) got \(receivedResult) instead")
-            }
-            exp.fulfill()
-        }
-        
-        client.complete(withStatusCode: 200, data: nonEmptyData)
-        
-        wait(for: [exp], timeout: 1.0)
+        expect(sut, toCompleteWith: .success(nonEmptyData), when: {
+            client.complete(withStatusCode: 200, data: nonEmptyData)
+        })
     }
-    
     
     // MARK: - Helpers
     
@@ -144,5 +86,28 @@ final class LoadImageDataFromRemoteUseCaseTests: XCTestCase {
     
     private func failure(_ error: RemoteImageDataLoader.Error) -> ImageDataLoader.Result {
         return .failure(error)
+    }
+    
+    private func expect(_ sut: RemoteImageDataLoader, toCompleteWith expectedResult: ImageDataLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+        let url = URL(string: "https://a-given-url.com")!
+        let exp = expectation(description: "Wait for load completion")
+        
+        _ = sut.loadImageData(from: url) { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.success(receivedData), .success(expectedData)):
+                XCTAssertEqual(receivedData, expectedData, file: file, line: line)
+            case let (.failure(receivedError as RemoteImageDataLoader.Error), .failure(expectedError as RemoteImageDataLoader.Error)):
+                XCTAssertEqual(receivedError, expectedError, file: file, line: line)
+            case let (.failure(receivedError as NSError), .failure(expectedError as NSError)):
+                XCTAssertEqual(receivedError, expectedError, file: file, line: line)
+            default:
+                XCTFail("Expected result \(expectedResult) got \(receivedResult) instead", file: file, line: line)
+            }
+            exp.fulfill()
+        }
+        
+        action()
+        
+        wait(for: [exp], timeout: 1.0)
     }
 }
