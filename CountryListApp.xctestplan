@@ -1,0 +1,30 @@
+{
+  "configurations" : [
+    {
+      "id" : "1741A955-EE9F-4CE0-B7A8-20EFEED53F68",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:CountryListApp.xcodeproj",
+      "identifier" : "C3D9DDA72B025CFF001FF8B1",
+      "name" : "CountryListApp"
+    },
+    "testExecutionOrdering" : "random"
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:CountryListApp.xcodeproj",
+        "identifier" : "C3D9DDC22B025E11001FF8B1",
+        "name" : "CountryListAppTests"
+      }
+    }
+  ],
+  "version" : 1
+}
