@@ -15,6 +15,11 @@
 		C3D9DDCF2B025F23001FF8B1 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D9DDCE2B025F23001FF8B1 /* HTTPClient.swift */; };
 		C3D9DDD32B025F57001FF8B1 /* HTTPClientSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D9DDD22B025F57001FF8B1 /* HTTPClientSpy.swift */; };
 		C3D9DDD62B025F8F001FF8B1 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D9DDD52B025F8F001FF8B1 /* XCTestCase+MemoryLeakTracking.swift */; };
+		C3D9DDD92B0261AE001FF8B1 /* RemoteCountryLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D9DDD82B0261AE001FF8B1 /* RemoteCountryLoader.swift */; };
+		C3D9DDDB2B0261C3001FF8B1 /* CountryListLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D9DDDA2B0261C3001FF8B1 /* CountryListLoader.swift */; };
+		C3D9DDDD2B0261F4001FF8B1 /* CountryListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D9DDDC2B0261F4001FF8B1 /* CountryListItem.swift */; };
+		C3D9DDDF2B0262A8001FF8B1 /* CountryListItemsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D9DDDE2B0262A8001FF8B1 /* CountryListItemsMapper.swift */; };
+		C3D9DDE22B0262DC001FF8B1 /* HTTPURLResponse+StatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D9DDE12B0262DC001FF8B1 /* HTTPURLResponse+StatusCode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +44,11 @@
 		C3D9DDCE2B025F23001FF8B1 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		C3D9DDD22B025F57001FF8B1 /* HTTPClientSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientSpy.swift; sourceTree = "<group>"; };
 		C3D9DDD52B025F8F001FF8B1 /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
+		C3D9DDD82B0261AE001FF8B1 /* RemoteCountryLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCountryLoader.swift; sourceTree = "<group>"; };
+		C3D9DDDA2B0261C3001FF8B1 /* CountryListLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListLoader.swift; sourceTree = "<group>"; };
+		C3D9DDDC2B0261F4001FF8B1 /* CountryListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListItem.swift; sourceTree = "<group>"; };
+		C3D9DDDE2B0262A8001FF8B1 /* CountryListItemsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListItemsMapper.swift; sourceTree = "<group>"; };
+		C3D9DDE12B0262DC001FF8B1 /* HTTPURLResponse+StatusCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HTTPURLResponse+StatusCode.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +113,8 @@
 		C3D9DDCC2B025EF3001FF8B1 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				C3D9DDE02B0262CB001FF8B1 /* Shared Helpers */,
+				C3D9DDD72B02619A001FF8B1 /* CountryList */,
 				C3D9DDCE2B025F23001FF8B1 /* HTTPClient.swift */,
 			);
 			path = API;
@@ -130,6 +142,25 @@
 				C3D9DDD52B025F8F001FF8B1 /* XCTestCase+MemoryLeakTracking.swift */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		C3D9DDD72B02619A001FF8B1 /* CountryList */ = {
+			isa = PBXGroup;
+			children = (
+				C3D9DDD82B0261AE001FF8B1 /* RemoteCountryLoader.swift */,
+				C3D9DDDA2B0261C3001FF8B1 /* CountryListLoader.swift */,
+				C3D9DDDC2B0261F4001FF8B1 /* CountryListItem.swift */,
+				C3D9DDDE2B0262A8001FF8B1 /* CountryListItemsMapper.swift */,
+			);
+			path = CountryList;
+			sourceTree = "<group>";
+		};
+		C3D9DDE02B0262CB001FF8B1 /* Shared Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				C3D9DDE12B0262DC001FF8B1 /* HTTPURLResponse+StatusCode.swift */,
+			);
+			path = "Shared Helpers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -235,6 +266,11 @@
 				C3D9DDAC2B025CFF001FF8B1 /* AppDelegate.swift in Sources */,
 				C3D9DDAE2B025CFF001FF8B1 /* SceneDelegate.swift in Sources */,
 				C3D9DDCF2B025F23001FF8B1 /* HTTPClient.swift in Sources */,
+				C3D9DDDB2B0261C3001FF8B1 /* CountryListLoader.swift in Sources */,
+				C3D9DDD92B0261AE001FF8B1 /* RemoteCountryLoader.swift in Sources */,
+				C3D9DDDF2B0262A8001FF8B1 /* CountryListItemsMapper.swift in Sources */,
+				C3D9DDE22B0262DC001FF8B1 /* HTTPURLResponse+StatusCode.swift in Sources */,
+				C3D9DDDD2B0261F4001FF8B1 /* CountryListItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

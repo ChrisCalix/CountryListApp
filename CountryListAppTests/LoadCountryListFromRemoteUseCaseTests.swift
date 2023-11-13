@@ -6,6 +6,7 @@
 //
 
 import XCTest
+@testable import CountryListApp
 
 final class LoadCountryListFromRemoteUseCaseTests: XCTestCase {
     
@@ -15,5 +16,18 @@ final class LoadCountryListFromRemoteUseCaseTests: XCTestCase {
         trackForMemoryLeaks(client)
         
         XCTAssertTrue(client.requestedURLs.isEmpty)
+    }
+    
+    func test_load_requestsDataFromURL() {
+        let url = URL(string: "https://a-given-url.com")!
+        let client = HTTPClientSpy()
+        let sut = RemoteCountryLoader(url: url, client: client)
+        
+        trackForMemoryLeaks(sut)
+        trackForMemoryLeaks(client)
+        
+        sut.load() { _ in }
+        
+        XCTAssertEqual(client.requestedURLs, [url])
     }
 }
