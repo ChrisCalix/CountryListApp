@@ -108,6 +108,28 @@ final class LoadCountryListFromRemoteUseCaseTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
+    func test_load_deliversNoItemsOn200HTTPResponseWithEmptyJSONList() {
+        let (sut, client) = makeSUT()
+        
+        let expectedResult: RemoteCountryLoader.Result = .success([])
+        let exp = expectation(description: "Wait for load")
+        
+        sut.load { receivedResult in
+            switch ( receivedResult, expectedResult) {
+            case let (.success(receivedItems), .success(expectedItems)):
+                XCTAssertEqual(receivedItems, expectedItems)
+            default:
+                XCTFail("Expected result \(expectedResult) instead")
+            }
+            exp.fulfill()
+        }
+        
+        let emptyListJSON = makeItemsJSON([])
+        client.complete(withStatusCode: 200, data: emptyListJSON)
+        
+        wait(for: [exp], timeout: 1.0)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(url: URL = URL(string: "https://a-url.com")!, file: StaticString = #file, line: UInt = #line) -> (sut: RemoteCountryLoader, client: HTTPClientSpy) {
