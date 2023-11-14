@@ -9,16 +9,16 @@ import Foundation
 
 struct DetailItem: Decodable {
     let name: Name?
-    let independent: Bool
+    let independent: Bool?
     let status: String?
     let unMember: Bool?
-    let capital: [String]
+    let capital: [String]?
     let region: String?
     let subregion: String?
-    let maps: Maps
-    let timezones: [String]
-    let continents: [String]
-    let flags: Flags
+    let maps: Maps?
+    let timezones: [String]?
+    let continents: [String]?
+    let flags: Flags?
     let startOfWeek: String?
     let coatOfArms: CoatOfArms?
 
@@ -33,8 +33,8 @@ struct DetailItem: Decodable {
     }
 
     struct Flags: Decodable {
-        let png: URL
-        let svg: URL
+        let png: URL?
+        let svg: URL?
         let alt: String?
     }
 

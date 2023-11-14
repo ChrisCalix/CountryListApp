@@ -42,7 +42,7 @@ final class DetailCellViewModel<Image> {
     }
 
     var altFlag: String? {
-        return model.flags.alt
+        return model.flags?.alt
     }
 
     var status: Bool {
@@ -50,7 +50,7 @@ final class DetailCellViewModel<Image> {
     }
 
     var independent: Bool {
-        model.independent
+        model.independent ?? false
     }
 
     var unMember: Bool {
@@ -58,12 +58,13 @@ final class DetailCellViewModel<Image> {
     }
 
     func loadFlagImageData() {
+        guard let flag = model.flags?.png else { return }
         onFlagShouldRetryImageLoadStateChange?(false)
         if let flagImage = flagImage {
             self.onFlagImageLoad?(flagImage)
         } else {
             onFlagImageLoadingStateChange?(true)
-            flagTask = imageLoader.loadImageData(from: model.flags.png){ [weak self] result in
+            flagTask = imageLoader.loadImageData(from: flag){ [weak self] result in
                 self?.handleFlag(result)
             }
         }
