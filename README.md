@@ -2,6 +2,8 @@
 Appplication para mostrar el listado de Países en un tableView, junto con una barra de busqueda que actualiza la lista por cada caracter agregado o eliminado. Al hacer click en un pais, este muestra el detalle d dicho pais en una nueva vista. Durante los tiempos de carga se muestra una pantalla de loading.
 
 La applicacion esta desarrollada en Xcode 15.0.1 para iOS 17.0. Sin frameworks de terceros o dependencias lo cual facilita la compilacion del mismo en el schenme: CounrtyListApp
+
+
 <img width="461" alt="Screenshot 2023-11-14 at 09 13 59" src="https://github.com/ChrisCalix/CountryListApp/assets/80593860/19df4ddc-23d1-436b-8270-8553db21099d">
 
 Requisitos:
@@ -23,10 +25,26 @@ Para textos de
 
 Screens capture:
 Country List View / Loading state:
+
 ![DetailViewLoading](https://github.com/ChrisCalix/CountryListApp/assets/80593860/806e1123-d701-436c-bf19-b13a8aaa74bc)
 
+Country List View / Image Shimmering Loading
 
+![CountryViewImageShimmering](https://github.com/ChrisCalix/CountryListApp/assets/80593860/172112dc-0471-4600-973e-d4ce4c78343b)
 
+Country List View / Loading Completed
 
+![CountryViewLoadedComplete](https://github.com/ChrisCalix/CountryListApp/assets/80593860/3c4dd0d4-fc55-468a-bf4d-f08e2e3b1eca)
 
+Country List View / Search Bar filter
+
+![CountryViewSearchBarFilter](https://github.com/ChrisCalix/CountryListApp/assets/80593860/995ea436-8db7-457f-a563-d77d0ff8c45f)
+
+Detail View / Loading
+
+![DetailViewLoading](https://github.com/ChrisCalix/CountryListApp/assets/80593860/0ee4a457-a197-489a-9313-e6680f5bd8f2)
+
+Detail View / Loading Complete
+
+![DetailViewLoaded](https://github.com/ChrisCalix/CountryListApp/assets/80593860/ee8d8bf6-77f5-46f3-9d09-9c601ddbf5ba)
 
