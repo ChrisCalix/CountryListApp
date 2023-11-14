@@ -30,21 +30,21 @@ Country List View / Loading state:
 
 Country List View / Image Shimmering Loading
 
-![CountryViewImageShimmering](https://github.com/ChrisCalix/CountryListApp/assets/80593860/172112dc-0471-4600-973e-d4ce4c78343b)
+![](Images/CountryViewImageShimmering.png)
 
 Country List View / Loading Completed
 
-![CountryViewLoadedComplete](https://github.com/ChrisCalix/CountryListApp/assets/80593860/3c4dd0d4-fc55-468a-bf4d-f08e2e3b1eca)
+![](Images/CountryViewLoadedComplete.png)
 
 Country List View / Search Bar filter
 
-![CountryViewSearchBarFilter](https://github.com/ChrisCalix/CountryListApp/assets/80593860/995ea436-8db7-457f-a563-d77d0ff8c45f)
+![](Images/CountryViewSearchBarFilter.png)
 
 Detail View / Loading
 
-![DetailViewLoading](https://github.com/ChrisCalix/CountryListApp/assets/80593860/0ee4a457-a197-489a-9313-e6680f5bd8f2)
+![](Images/DetailViewLoading.png)
 
 Detail View / Loading Complete
 
-![DetailViewLoaded](https://github.com/ChrisCalix/CountryListApp/assets/80593860/ee8d8bf6-77f5-46f3-9d09-9c601ddbf5ba)
+![](Images/DetailViewLoaded.png)
 
