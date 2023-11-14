@@ -26,7 +26,7 @@ Para textos de
 Screens capture:
 Country List View / Loading state:
 
-![Images/CountryViewLoading.png]
+![](Images/CountryViewLoading.png)
 
 Country List View / Image Shimmering Loading
 
