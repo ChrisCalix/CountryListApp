@@ -15,6 +15,8 @@ Requisitos:
 
 Se decició utilizo MVVM pattern por el tamaño del projecto y los side effects que estos requerian (modulo de network desde servidor). Se combino con Composite pattern para tener el codigo mejor desacoplado y las responsabilidades de cada elemento separada. Para garantizar que ciertas ejecuciones que deban afectar la UI despues de un proceso background se implemento Decorate Pattern. 
 
+Se realizo el desarrollo de unit test el cual cubre un 91 % del codigo en la seccion Country List View. Po cuestion de tiempos no se agrego muchos test para la seccion de Detail. (Snapshot Test, Integration Test, LoadCountryFromRemote, LoadImageFromRemote and LoadDetailFromRemote) en el proyecto completo se tiene un 75% de testcoverage el cual se puede ejecutar en el scheme: CounrtyListApp y presionando (Command + U).
+
 Las imagenes dentro de cada País cuentan con un efecto adicional de carga shimmering dentro de su propio contenedor esto debido a que la vista de cargando es para la carga de datos en general y la respuesta de carga de imagenes no deberia obstaculizar con la experiencia de usuario y la veloocidad que se le puedan presentar los datos. Adicionalmente estas imagenes cuentan con un botton de reintento cuando estas cargas fallan. 
 Las imagenes tambien cuentan con un CancelTask cuando estas se encuentran solicitando la imagen al servidor y la celda pasara a dejar de presentarse, preparandola para su reutlizacion y previniendo que no haya conflictos con la presentacion de imagenes cuando se realizan scrolls bastante largos. Ademas como no habia solicitud de almacenarlo en un cache las imagenes se opto por guardar las imagenes InMemory para mejorar la experiencia de usuario y la performance de la app.
 
@@ -48,3 +50,6 @@ Detail View / Loading Complete
 
 ![](Images/DetailViewLoaded.png)
 
+Se considero el desarrollo para NightMode: 
+
+![](Images/COUNTRY_LIST_WITH_CONTENT_dark.png)
