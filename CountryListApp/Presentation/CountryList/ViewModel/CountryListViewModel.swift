@@ -47,6 +47,7 @@ final class CountryListViewModel {
 
     func filter(by text: String) {
         guard !text.isEmpty else {
+            onCountryLoad?(items)
             return
         }
         let countryFiltered = items.filter { countryItem in
