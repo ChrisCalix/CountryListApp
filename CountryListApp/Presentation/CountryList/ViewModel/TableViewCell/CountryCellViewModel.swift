@@ -23,7 +23,7 @@ final class CountryCellViewModel<Image> {
     }
     
     var commonName: String? {
-        return model.name?.common
+        return model.name.common
     }
     
     var timezone: String? {
@@ -51,7 +51,7 @@ final class CountryCellViewModel<Image> {
     
     var details: String {
         var details = String()
-        if let officialName = model.name?.official {
+        if let officialName = model.name.official {
             details.append("Official name is ")
             details.append(officialName)
             details.append(". ")

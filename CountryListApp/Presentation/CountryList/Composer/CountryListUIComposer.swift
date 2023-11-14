@@ -51,7 +51,7 @@ final class CountryListUIComposer {
                         imageTransformer: UIImage.init
                     ),
                     selection: { [selection] in
-                        selection(model.name?.common)
+                        selection(model.name.common)
                     }
                 )
             }

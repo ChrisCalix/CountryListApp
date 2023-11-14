@@ -11,9 +11,11 @@ final class CountryListViewModel {
     typealias Observer<T> = (T) -> Void
     
     private let countryLoader: CountryListLoader
-    
+    private var items: [CountryListItem]
+
     init(countryLoader: CountryListLoader) {
         self.countryLoader = countryLoader
+        items = []
     }
     
     var title: String {
@@ -36,9 +38,20 @@ final class CountryListViewModel {
         defer { onLoadingStateChange?(false)}
         switch result {
         case .success(let country):
+            items = country
             onCountryLoad?(country)
         case .failure:
             onErrorStateChange?(Localized.CountryList.loadError)
         }
+    }
+
+    func filter(by text: String) {
+        guard !text.isEmpty else {
+            return
+        }
+        let countryFiltered = items.filter { countryItem in
+            countryItem.name.common.contains(text)
+        }
+        onCountryLoad?(countryFiltered)
     }
 }

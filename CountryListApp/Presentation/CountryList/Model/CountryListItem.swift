@@ -9,7 +9,7 @@ import Foundation
 
 struct CountryListItem: Decodable {
 
-    let name: Name?
+    let name: Name
     let region: String?
     let subregion: String?
     let flags: flagsImage
@@ -18,7 +18,7 @@ struct CountryListItem: Decodable {
     let continents: [String]?
 
     struct Name: Decodable {
-        let common: String?
+        let common: String
         let official: String?
     }
 
@@ -35,9 +35,6 @@ struct CountryListItem: Decodable {
 
 extension CountryListItem: Equatable {
     static func == (lhs: CountryListItem, rhs: CountryListItem) -> Bool {
-        guard let lhsName = lhs.name, let rhsName = rhs.name else {
-            return false
-        }
-        return lhsName.common == rhsName.common && lhsName.official == rhsName.official
+        return lhs.name.common == rhs.name.common
     }
 }

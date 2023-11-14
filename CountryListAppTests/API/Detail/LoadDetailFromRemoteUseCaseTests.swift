@@ -157,7 +157,8 @@ final class LoadDetailFromRemoteUseCaseTests: XCTestCase {
                 png: pngFlag,
                 svg: svgFlag,
                 alt: altFalg),
-            startOfWeek: startOfWeek
+            startOfWeek: startOfWeek, 
+            coatOfArms: nil
         )
 
         let json = [
