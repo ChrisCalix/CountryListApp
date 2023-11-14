@@ -26,7 +26,7 @@ Para textos de
 Screens capture:
 Country List View / Loading state:
 
-![DetailViewLoading](https://github.com/ChrisCalix/CountryListApp/assets/80593860/806e1123-d701-436c-bf19-b13a8aaa74bc)
+![Images/CountryViewLoading.png]
 
 Country List View / Image Shimmering Loading
 
