@@ -34,6 +34,7 @@ final class LoadingView: Loading {
     
     func endToLoading() {
         isLoading = false
-        alert.dismiss(animated: true)
+
+        self.alert.dismiss(animated: true)
     }
 }

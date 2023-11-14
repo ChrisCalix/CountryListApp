@@ -9,89 +9,105 @@ import Foundation
 
 final class DetailCellViewModel<Image> {
     typealias Observer<T> = (T) -> Void
-    private var task: ImageDataLoaderTask?
+    private var flagTask: ImageDataLoaderTask?
+    private var shieldTask: ImageDataLoaderTask?
     private let model: DetailItem
     private let imageLoader: ImageDataLoader
     private let imageTransformer: (Data) -> Image?
-    private var image: Image?
-
-    init(model: DetailItem, imageLoader: ImageDataLoader, imageTransformer: @escaping (Data) -> Image?) {
-        self.model = model
-        self.imageLoader = imageLoader
-        self.imageTransformer = imageTransformer
-        image = nil
-    }
+    private var flagImage: Image?
+    private var shieldImage: Image?
 
     var commonName: String? {
         return model.name?.common
     }
 
-//    var timezone: String? {
-//        guard let timezones = model.timezones?.joined(separator: " and ") else  {
-//            return nil
-//        }
-//        return "Timezones: " + timezones
-//    }
-//
-//    var located: String {
-//        var located = String()
-//        if let continents = model.continents?.joined(separator: " and ") {
-//            located.append("Located in ")
-//            located.append(continents)
-//            located.append(". ")
-//        }
-//        if let region = model.region, let subRegion = model.subregion {
-//            located.append("Region ")
-//            located.append(region)
-//            located.append(" and Subregion ")
-//            located.append("\(subRegion).")
-//        }
-//        return located
-//    }
-//
-//    var details: String {
-//        var details = String()
-//        if let officialName = model.name?.official {
-//            details.append("Official name is ")
-//            details.append(officialName)
-//            details.append(". ")
-//        }
-//        if let capitals = model.capital {
-//            details.append("The capital")
-//            details.append(capitals.count > 1 ? "s are " : " is ")
-//            details.append(capitals.joined(separator: " and "))
-//        }
-//        return details
-//    }
+    var onFlagImageLoad: Observer<Image>?
+    var onFlagImageLoadingStateChange: Observer<Bool>?
+    var onFlagShouldRetryImageLoadStateChange: Observer<Bool>?
 
-    var onImageLoad: Observer<Image>?
-    var onImageLoadingStateChange: Observer<Bool>?
-    var onShouldRetryImageLoadStateChange: Observer<Bool>?
+    var onShieldImageLoad: Observer<Image>?
+    var onShieldImageLoadingStateChange: Observer<Bool>?
+    var onShieldShouldRetryImageLoadStateChange: Observer<Bool>?
 
-    func loadImageData() {
-        onShouldRetryImageLoadStateChange?(false)
-        if let image = image {
-            self.onImageLoad?(image)
+    init(model: DetailItem, imageLoader: ImageDataLoader, imageTransformer: @escaping (Data) -> Image?) {
+        self.model = model
+        self.imageLoader = imageLoader
+        self.imageTransformer = imageTransformer
+        flagImage = nil
+        shieldImage = nil
+    }
+
+    var name: String? {
+        return model.name?.common
+    }
+
+    var altFlag: String? {
+        return model.flags.alt
+    }
+
+    var status: Bool {
+        return model.status?.isEmpty ?? false
+    }
+
+    var independent: Bool {
+        model.independent
+    }
+
+    var unMember: Bool {
+        model.unMember ?? false
+    }
+
+    func loadFlagImageData() {
+        onFlagShouldRetryImageLoadStateChange?(false)
+        if let flagImage = flagImage {
+            self.onFlagImageLoad?(flagImage)
         } else {
-            onImageLoadingStateChange?(true)
-            task = imageLoader.loadImageData(from: model.flags.png){ [weak self] result in
-                self?.handle(result)
+            onFlagImageLoadingStateChange?(true)
+            flagTask = imageLoader.loadImageData(from: model.flags.png){ [weak self] result in
+                self?.handleFlag(result)
             }
         }
     }
 
-    private func handle(_ result: ImageDataLoader.Result) {
-        if let image = (try? result.get()).flatMap(imageTransformer) {
-            self.image = image
-            onImageLoad?(image)
+    private func handleFlag(_ result: ImageDataLoader.Result) {
+        if let flagImage = (try? result.get()).flatMap(imageTransformer) {
+            self.flagImage = flagImage
+            onFlagImageLoad?(flagImage)
         } else {
-            onShouldRetryImageLoadStateChange?(true)
+            onFlagShouldRetryImageLoadStateChange?(true)
         }
-        onImageLoadingStateChange?(false)
+        onFlagImageLoadingStateChange?(false)
+    }
+
+    func loadShieldImageData() {
+        guard let coatOfArms = model.coatOfArms?.png else {
+            return
+        }
+        onShieldShouldRetryImageLoadStateChange?(false)
+        if let shieldImage = shieldImage {
+            self.onShieldImageLoad?(shieldImage)
+        } else {
+            onShieldImageLoadingStateChange?(true)
+            shieldTask = imageLoader.loadImageData(from: coatOfArms){ [weak self] result in
+                self?.handleShield(result)
+            }
+        }
+    }
+
+    private func handleShield(_ result: ImageDataLoader.Result) {
+        if let shieldImage = (try? result.get()).flatMap(imageTransformer) {
+            self.shieldImage = shieldImage
+            onShieldImageLoad?(shieldImage)
+        } else {
+            onShieldShouldRetryImageLoadStateChange?(true)
+        }
+        onShieldImageLoadingStateChange?(false)
     }
 
     func cancelImageDataLoad() {
-        task?.cancel()
-        task = nil
+        flagTask?.cancel()
+        flagTask = nil
+        shieldTask?.cancel()
+        shieldTask = nil
     }
 }

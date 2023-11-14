@@ -7,3 +7,6 @@
 */
 "COUNTRY_LIST_VIEW_TITLE" = "Detalles";
 "COUNTRY_LIST_CONNECTION_ERROR" = "No pudimos conectarnos al servidor";
+"DETAIL_INDEPENDENT" = "Independiente";
+"DETAIL_UNMARK" = "No Miembro";
+"DETAIL_STATUS" = "Estado";

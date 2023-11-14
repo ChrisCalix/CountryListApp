@@ -37,7 +37,9 @@ final class DetailViewController: UITableViewController, UITableViewDataSourcePr
             if isLoading {
                 self?.loader?.beginToLoading(in: self)
             } else {
-                self?.loader?.endToLoading()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self?.loader?.endToLoading()
+                }
             }
         }
 

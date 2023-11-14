@@ -9,6 +9,7 @@ import UIKit
 
 extension UIImageView {
     func setImageAnimated(_ newImage: UIImage?) {
+        //TODO: check main thread
         image = newImage
         
         guard newImage != nil else { return }

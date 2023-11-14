@@ -59,8 +59,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return LoadingView()
     }
 
+    private func makeRemoteDetailLoader(url: URL) -> DetailLoader {
+        let remoteDetailLoader = RemoteDetailLoader(url: url, client: httpClient)
+        return remoteDetailLoader
+    }
+
     func showDetails(for name: String?) {
-        
+        guard let name else { return }
+        let url = DetailEndpoint.getDetailBy(name: name).url(baseURL: baseURL)
+        let details = DetailUIComposer.detailComposedWith(
+            detailLoader: self.makeRemoteDetailLoader(url: url),
+            imageLoader: self.makeRemoteImageLoader(),
+            loadingView: self.makeLoadingView()
+        )
+        navigationController.pushViewController(details, animated: true)
     }
 }
 

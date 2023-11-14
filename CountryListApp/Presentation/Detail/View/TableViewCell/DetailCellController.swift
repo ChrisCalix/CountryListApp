@@ -19,12 +19,13 @@ final class DetailCellController {
 
     func view(in tableView: UITableView) -> UITableViewCell {
         let cell = bind(tableView.dequeueReusableCell())
-        viewModel.loadImageData()
+        preload()
         return cell
     }
 
     func preload() {
-        viewModel.loadImageData()
+        viewModel.loadFlagImageData()
+        viewModel.loadShieldImageData()
     }
 
     func cancelLoad() {
@@ -37,27 +38,49 @@ final class DetailCellController {
     }
 
     public func display(_ viewModel: DetailCellViewModel<UIImage>) {
-//        cell?.shortDetails.text = viewModel.details
-//        cell?.commonName.text = viewModel.commonName
-//        cell?.located.text = viewModel.located
-//        cell?.timezones.text = viewModel.timezone
-        cell?.onRetry = viewModel.loadImageData
+        cell?.nameLabel.text = viewModel.commonName
+        cell?.flagLabel.text = viewModel.altFlag
+
+        cell?.independentLabel.text = Localized.Detail.independentLabel
+        cell?.independentImageView.image = viewModel.independent ? UIImage.makeCheckMark() : UIImage.makeXMark()
+        cell?.independentImageView.tintColor = viewModel.independent ? UIColor.green : UIColor.red
+
+        cell?.statusLabel.text = Localized.Detail.statusLabel
+        cell?.statusImageView.image = viewModel.status ? UIImage.makeCheckMark() : UIImage.makeXMark()
+        cell?.statusImageView.tintColor = viewModel.status ? UIColor.green : UIColor.red
+
+        cell?.unMemberLabel.text = Localized.Detail.unmarkLabel
+        cell?.unMemberImageView.image = viewModel.unMember ? UIImage.makeCheckMark() : UIImage.makeXMark()
+        cell?.unMemberImageView.tintColor = viewModel.unMember ? UIColor.green : UIColor.red
+
     }
 
     private func bind(_ cell: DetailCell) -> DetailCell {
         self.cell = cell
         display(viewModel)
 
-        viewModel.onImageLoad = { [weak self] image in
-            self?.cell?.detailImageView.setImageAnimated(image)
+        viewModel.onFlagImageLoad = { [weak self] image in
+            self?.cell?.flagImageView.setImageAnimated(image)
         }
 
-        viewModel.onImageLoadingStateChange = { [weak self] isLoading in
-            self?.cell?.detailImageContainer.isShimmering = isLoading
+        viewModel.onFlagImageLoadingStateChange = { [weak self] isLoading in
+            self?.cell?.flagImageContainer.isShimmering = isLoading
         }
 
-        viewModel.onShouldRetryImageLoadStateChange = { [weak self] shouldRetry in
-            self?.cell?.detailImageRetryButton.isHidden = !shouldRetry
+        viewModel.onFlagShouldRetryImageLoadStateChange = { [weak self] shouldRetry in
+            self?.cell?.flagImageRetryButton.isHidden = !shouldRetry
+        }
+
+        viewModel.onShieldImageLoad = { [weak self] image in
+            self?.cell?.shieldImageView.setImageAnimated(image)
+        }
+
+        viewModel.onShieldImageLoadingStateChange = { [weak self] isLoading in
+            self?.cell?.shieldImageContainer.isShimmering = isLoading
+        }
+
+        viewModel.onShieldShouldRetryImageLoadStateChange = { [weak self] shouldRetry in
+            self?.cell?.shieldImageRetryButton.isHidden = !shouldRetry
         }
 
         return cell

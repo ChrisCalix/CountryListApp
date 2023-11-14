@@ -7,3 +7,6 @@
 */
 "DETAIL_VIEW_TITLE" = "Detail";
 "DETAIL_CONNECTION_ERROR" = "Couldn't connect to server";
+"DETAIL_INDEPENDENT" = "Independent";
+"DETAIL_UNMARK" = "Unmember";
+"DETAIL_STATUS" = "Status";

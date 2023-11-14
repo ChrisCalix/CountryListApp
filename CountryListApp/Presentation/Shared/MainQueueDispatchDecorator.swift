@@ -17,7 +17,7 @@ final class MainQueueDispatchDecorator<T> {
     
     func dispatch(completion: @escaping () -> Void) {
         guard Thread.isMainThread else {
-            return DispatchQueue.main.async(execute: completion)
+            return DispatchQueue.main.async( execute: completion)
         }
         completion()
     }
@@ -25,6 +25,14 @@ final class MainQueueDispatchDecorator<T> {
 
 extension MainQueueDispatchDecorator: CountryListLoader where T == CountryListLoader {
     func load(completion: @escaping (CountryListLoader.Result) -> Void) {
+        decorate.load { [weak self] result in
+            self?.dispatch { completion(result)}
+        }
+    }
+}
+
+extension MainQueueDispatchDecorator: DetailLoader where T == DetailLoader {
+    func load(completion: @escaping (DetailLoader.Result) -> Void) {
         decorate.load { [weak self] result in
             self?.dispatch { completion(result)}
         }

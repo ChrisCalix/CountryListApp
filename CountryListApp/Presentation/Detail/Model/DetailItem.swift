@@ -20,6 +20,7 @@ struct DetailItem: Decodable {
     let continents: [String]
     let flags: Flags
     let startOfWeek: String?
+    let coatOfArms: CoatOfArms?
 
     struct Name: Decodable {
         let common: String?
@@ -38,8 +39,8 @@ struct DetailItem: Decodable {
     }
 
     struct CoatOfArms: Decodable {
-        let png: URL
-        let svg: URL
+        let png: URL?
+        let svg: URL?
     }
 }
 
