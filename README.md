@@ -2,6 +2,7 @@
 Appplication para mostrar el listado de Países en un tableView, junto con una barra de busqueda que actualiza la lista por cada caracter agregado o eliminado. Al hacer click en un pais, este muestra el detalle d dicho pais en una nueva vista. Durante los tiempos de carga se muestra una pantalla de loading.
 
 La applicacion esta desarrollada en Xcode 15.0.1 para iOS 17.0. Sin frameworks de terceros o dependencias lo cual facilita la compilacion del mismo en el schenme: CounrtyListApp
+<img width="461" alt="Screenshot 2023-11-14 at 09 13 59" src="https://github.com/ChrisCalix/CountryListApp/assets/80593860/19df4ddc-23d1-436b-8270-8553db21099d">
 
 Requisitos:
 - Agregar una vista cargando inicial
@@ -18,4 +19,14 @@ Las imagenes tambien cuentan con un CancelTask cuando estas se encuentran solici
 Se considero realizar la implementacion de la UI por codigo pero dado a que es un proyecto simple y no se realiza el dearrollo con un equipo (previniendo errores dentro de los archivos de vistas) se utilizo StoryBoards con su interface builder haciendola esta mas facil de entender y visualizar los elementos dentro de cada vista para una presentacion. 
 
 Para la pantalla de detalle tambien se utilizo un TableView dado a que el servicio retorna una lista de items, y es posible que retorne detalle de varios a la vez. 
+Para textos de 
+
+Screens capture:
+Country List View / Loading state:
+![Simulator Screenshot - iPhone 15 Pro - 2023-11-14 at 09 12 37](https://github.com/ChrisCalix/CountryListApp/assets/80593860/8f0f24cf-cc94-49f8-a9bc-a10ae0cffbac)
+
+
+
+
+
 
