@@ -23,7 +23,7 @@ Para textos de
 
 Screens capture:
 Country List View / Loading state:
-![Simulator Screenshot - iPhone 15 Pro - 2023-11-14 at 09 12 37](https://github.com/ChrisCalix/CountryListApp/assets/80593860/8f0f24cf-cc94-49f8-a9bc-a10ae0cffbac)
+![DetailViewLoading](https://github.com/ChrisCalix/CountryListApp/assets/80593860/806e1123-d701-436c-bf19-b13a8aaa74bc)
 
 
 
