@@ -51,7 +51,7 @@ final class CountryListViewModel {
             return
         }
         let countryFiltered = items.filter { countryItem in
-            countryItem.name.common.contains(text)
+            countryItem.name.common.lowercased().contains(text.lowercased())
         }
         onCountryLoad?(countryFiltered)
     }
